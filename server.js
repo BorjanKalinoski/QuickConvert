@@ -12,7 +12,15 @@ db.once('open', () => console.log('Connected to db'));
 const imagesRouter = require('./routes/images');
 app.use("/images", imagesRouter);
 
-
+function errorHandler (err, req, res, next) {
+    console.log('eee' + err);
+    if (res.headersSent) {
+        console.log('a');
+        return next(err)
+    }
+    res.status(500);
+    res.render('error', { error: err })
+}
 app.listen(3000, () => {
     console.log('Server listening on port 3000')
-})
+});

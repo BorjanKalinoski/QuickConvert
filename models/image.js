@@ -1,13 +1,20 @@
 const mongoose = require('mongoose');
 const imageSchema = new mongoose.Schema({
-    img: {
-        data: Buffer,
-        contentType: String
-    },
+    files: [{
+        data: {
+            type: Buffer,
+            required: true
+        },
+        filename: {
+            type: String,
+            required: true
+        }
+    }]
+    ,
     expireAt: {
         type: Date,
-        required: true
+        default: Date.now,
+        index: {expires: '3m'},
     }
 });
-imageSchema.index({expireAt:1},{expireAfterSeconds: 50})
 module.exports = mongoose.model('Image', imageSchema);
