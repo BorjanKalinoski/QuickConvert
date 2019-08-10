@@ -1,16 +1,23 @@
 class BadFileTypeError extends Error {
     constructor(message) {
         super(message);
-        this.error = 'File type not supported for conversion';
+        this.message = 'File type not supported for conversion';
     };
 }
 class ExceededFileSizeError extends Error {
     constructor(message) {
         super(message);
-        this.error = 'File size exceeds the allowed amount';
+        this.message = 'File size exceeds the allowed amount';
+    }
+}
+class ConversionNotSupportedError extends Error {
+    constructor(message) {
+        super(message);
+        this.message = 'Cannot convert to provided file type';
     }
 }
 module.exports = {
     ExceededFileSizeError,
-    BadFileTypeError
+    BadFileTypeError,
+    ConversionNotSupportedError
 };
