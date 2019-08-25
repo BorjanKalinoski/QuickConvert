@@ -8,16 +8,19 @@
     "extends": "eslint:recommended",
     "globals": {
         "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly"
+        "SharedArrayBuffer": "readonly",
+        "next": "off"
     },
     "parserOptions": {
         "ecmaVersion": 2018
     },
     "rules": {
+        "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
         "camelcase": "error",
         "indent": [
             "error",
-            4
+            4,
+            { "SwitchCase": 1 }
         ],
         "linebreak-style": [
             "error",

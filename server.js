@@ -7,17 +7,15 @@ const MulterError = require('multer').MulterError;
 mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true, useCreateIndex: true});
 const db = mongoose.connection;
 
-db.on('error', (error) => console.error(error));
-db.once('open', () => console.log('Connected to db'));
-
+db.on('error', (error) => {
+    throw new Error(error);
+});
+db.once('open', () => {
+//    TODO logger
+});
 const imagesRouter = require('./routes/images');
-app.use("/images", imagesRouter);
-// app.use((req, res, next) => {
-//     const error = new Error('Not found');
-//     error.status = 404;
-//     next(error);
-// });
-app.use((error, req, res, next) => {
+app.use('/images', imagesRouter);
+app.use((error, req, res, _next) => {
     if (error instanceof BadFileTypeError || error instanceof ExceededFileSizeError || error instanceof ConversionNotSupportedError) {
         return res.status(400).json({
             error: error.message
@@ -25,7 +23,7 @@ app.use((error, req, res, next) => {
     } else if (error instanceof MulterError) {
         if (error.code === 'LIMIT_UNEXPECTED_FILE') {
             return res.status(400).json({
-                error: "Please provide a valid number of files"
+                error: 'Please provide a valid number of files'
             }).end();
         }
     }
@@ -36,5 +34,5 @@ app.use((error, req, res, next) => {
     }).end();
 });
 app.listen(3000, () => {
-    console.log('Server listening on port 3000')
+//    TODO logger
 });
