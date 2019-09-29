@@ -1,9 +1,16 @@
 require('dotenv').config();
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 const mongoose = require('mongoose');
-const {BadFileTypeError, ExceededFileSizeError, ConversionNotSupportedError} = require('./errors/errors');
+const {BadRequestError} = require('./errors/errors');
 const MulterError = require('multer').MulterError;
+
+const server = app.listen(3000, () => {
+//    TODO logger
+    console.log('server listening on port 3000');
+});
+
 mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true, useCreateIndex: true});
 const db = mongoose.connection;
 
@@ -14,9 +21,14 @@ db.once('open', () => {
 //    TODO logger
 });
 const imagesRouter = require('./routes/images');
+const videosRouter = require('./routes/videos');
+
+app.use(express.static('public'));
+app.use(bodyParser.json());
 app.use('/images', imagesRouter);
+app.use('/videos', videosRouter);
 app.use((error, req, res, _next) => {
-    if (error instanceof BadFileTypeError || error instanceof ExceededFileSizeError || error instanceof ConversionNotSupportedError) {
+    if (error instanceof BadRequestError) {
         return res.status(400).json({
             error: error.message
         }).end();
@@ -32,7 +44,4 @@ app.use((error, req, res, _next) => {
             message: error.message
         }
     }).end();
-});
-app.listen(3000, () => {
-//    TODO logger
 });
