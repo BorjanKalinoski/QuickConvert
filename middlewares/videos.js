@@ -25,21 +25,7 @@ const downloadVideo = async (req, res, next) => {
     const {url, toFormat} = req.body;
     const basicVideoInfo = await ytdl.getBasicInfo(url);
 
-    ffmpeg(ytdl(url))
-        .toFormat(toFormat)
-        .audioBitrate('128k')
-        .videoBitrate('5000k')
-        .on('end', (err) => {
-            console.log('done');
-        })
-        .on('error', (err) => {
-            console.log('er' + err.message);
-        })
-        .on('stderr', (stderrLine) => {
-            console.log('Stderr output: ' + stderrLine);
-        })
-        .pipe(res, {end: true});
-
+    req.body.readableStream = ytdl(url);
     req.body.title = basicVideoInfo.title;
     // req.body.readableVideoStream =;
 

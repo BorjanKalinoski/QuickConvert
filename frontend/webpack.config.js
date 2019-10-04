@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     entry: './src/index.tsx',
     output: {
-        path: path.resolve(__dirname, 'build'),
+        path: path.resolve(__dirname, 'build/'),
         filename: 'bundle.js'
     },
     module: {
@@ -14,9 +14,24 @@ module.exports = {
             },
             {
                 enforce: 'pre',
-                // eslint-disable-next-line no-useless-escape
-                test: '/\.js$/',
+                test: /\.js$/,
                 loader: 'source-map-loader'
+            },
+            {
+                test: /\.less$/,
+                use: [
+                    {
+                        loader: 'style-loader', // creates style nodes from JS strings
+                    },
+                    {
+                        loader: 'css-loader', // translates CSS into CommonJS
+                    },
+                    {
+                        loader: 'less-loader', // compiles Less to CSS
+                        options: {
+                            javascriptEnabled: true
+                        }
+                    }]
             }
         ]
     },
@@ -26,7 +41,7 @@ module.exports = {
         })
     ],
     resolve: {
-        extensions: ['.js', '.jsx', '.tsx']
+        extensions: ['.js', '.jsx', '.tsx', '.css', '.less']
     },
     devtool: 'source-map'
 };

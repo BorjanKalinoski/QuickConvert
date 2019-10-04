@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const ffmpeg = require('fluent-ffmpeg');
+
 // ffmpeg.getAvailableFormats(function (err, formats) {
 //     console.log('Available formats:');
 //     console.log(formats);
@@ -11,17 +13,28 @@ const {validateVideo, downloadVideo, convertVideo} = require('../middlewares/vid
 
 router.post('/download', validateVideo, downloadVideo, async (req, res) => {
 
-    const {readableVideoStream, toFormat, title, mime} = req.body;
+    const {readableStream, toFormat, title, mime} = req.body;
 
     res.contentType(`${mime}/${toFormat}`);
     res.attachment(`${title}.${toFormat}`);
 
-    // readableVideoStream.pipe(res,{end: true});
-
-    // .on('progress', (progress) => {
-    //     console.log(progress);//timemark - finaltimemark -> procenti
-    //     console.log('Processing: ' + progress.percent + '% done');
-    // })
+    ffmpeg(readableStream)
+        .format(toFormat)
+        .videoCodec('libx264')
+        .audioCodec('copy')
+        // .outputOptions(['-preset slow'])
+        // .videoBitrate('5000k')
+        .on('end', (err) => {
+            console.log('done');
+        })
+        .on('error', (err) => {
+            console.log('er' + err.message);
+            console.log(err);
+        })
+        .on('stderr', (stderrLine) => {
+            console.log('Stderr output: ' + stderrLine);
+        })
+        .pipe(res);
 });
 
 module.exports = router;
