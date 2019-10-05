@@ -34,6 +34,7 @@
             "error",
             "always"
         ],
+        "require-atomic-updates": "off",
         "no-console": "error"
     }
 }
