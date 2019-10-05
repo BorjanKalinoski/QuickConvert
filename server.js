@@ -2,14 +2,28 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+
 const {BadFileTypeError, ExceededFileSizeError, ConversionNotSupportedError} = require('./errors/errors');
+
 const MulterError = require('multer').MulterError;
 mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true, useCreateIndex: true});
 const db = mongoose.connection;
 
-db.on('error', (error) => {
-    throw new Error(error);
-});
+db
+    .on('error', (err) => {
+    console.log('aaa');
+
+
+
+    // throw new Error(error);
+}
+
+
+);
+
+
+
+
 db.once('open', () => {
 //    TODO logger
 });
