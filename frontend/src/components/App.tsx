@@ -1,16 +1,14 @@
 import * as React from 'react';
 import Container from "./Container/Container";
+import {AppState} from "../store/types";
 
 export default class App extends React.Component<any, {}> {
     render() {
         return (
-            <div>
+            <React.Fragment>
                 <Container/>
-            </div>
+            </React.Fragment>
         );
     }
 };
 
-interface Props {
-    name: string;
-}
