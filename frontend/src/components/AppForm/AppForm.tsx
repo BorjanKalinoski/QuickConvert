@@ -6,29 +6,55 @@ import Col from "antd/lib/grid/col"
 import Row from "antd/lib/grid/row"
 import Upload from "antd/es/upload";
 import Icon from "antd/es/icon";
+import {FormType} from "../../store/form/types";
+import {AppState} from "../../store";
+import axios from 'axios';
+
+import {
+    onUrlChange,
+    onConvertToChange,
+    onFileChange
+} from '../../store/form/actions';
+
+import {connect} from "react-redux";
+
 const { TreeNode } = TreeSelect;
 
-interface Props {
+interface OwnProps {
+    formType: FormType;
+}
+
+interface DispatchProps {
+    onUrlChange: typeof onUrlChange;
+    onConvertToChange: typeof onConvertToChange;
+    onFileChange: typeof onFileChange;
 
 }
 
-interface State {
-    formType: string;
+interface StateProps {
+    url: AppState['form']['url'];
+    convertTo: AppState['form']['convertTo'];
+    file: AppState['form']['file'];
 }
 
-export default class AppForm extends React.Component<Props, State> {
+type Props = DispatchProps & StateProps & OwnProps;
+
+export class AppForm extends React.Component<Props, {}> {
     render() {
-        const a = '1';
+        const {formType, url, convertTo, file} = this.props;
+
         return (
-            <Form className={'AppForm'}>
+            <Form className={'AppForm'} onSubmit={this.handleSubmit}>
                 <Row type='flex'>
                     <Col span={20}>
                         <Form.Item>
                             {
-                                // @ts-ignore
-                                'yt' === a ?
+                                formType === FormType.BASIC ?
                                     < Upload
                                         name='file'
+                                        onChange={(e) => {
+                                            this.props.onFileChange(e);
+                                        }}
                                     >
                                         <Button>
                                             <Icon type="upload"/> Click to upload your file
@@ -36,6 +62,8 @@ export default class AppForm extends React.Component<Props, State> {
                                     </Upload>
                                     : <Input
                                         placeholder="Enter a valid youtube link"
+                                        onChange={(e) => this.props.onUrlChange(e.target.value)}
+                                        value={url}
                                         required
                                     />
                             }
@@ -45,6 +73,8 @@ export default class AppForm extends React.Component<Props, State> {
                         <Form.Item>
                             <TreeSelect
                                 defaultValue="Convert To"
+                                onChange={(e) => this.props.onConvertToChange(e)}
+                                value={convertTo}
                             >
                                 <TreeNode
                                     value='Audio'
@@ -92,4 +122,32 @@ export default class AppForm extends React.Component<Props, State> {
             </Form>
         );
     }
-};
+
+    handleSubmit(e: any) {
+        console.log(e);
+        e.preventDefault();
+        axios.post('/videos/download', {
+            convertTo: this.props.convertTo,
+            url: this.props.url
+        }).then(res => {
+            console.log('yay!');
+            console.log(res);
+        }).catch(err => {
+            console.log('err:(');
+            console.log(err);
+        });
+    }
+}
+
+export default connect<StateProps, DispatchProps, {}, AppState>(
+    state => ({
+        file: state.form.file,
+        url: state.form.url,
+        convertTo: state.form.convertTo
+    }),
+    {
+        onConvertToChange,
+        onUrlChange,
+        onFileChange
+    }
+)(AppForm);

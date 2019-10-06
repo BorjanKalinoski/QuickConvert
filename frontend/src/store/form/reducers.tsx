@@ -1,9 +1,9 @@
-import {FormActionTypes, FormState, FormType} from './types';
+import {actions, FormActionTypes, FormState, FormType} from './types';
 import {Reducer} from "redux";
 
 const initialState: FormState = {
     formType: FormType.NONE,
-    convertTo: '',
+    convertTo: 'Convert To',
     file: '',
     url: ''
 };
@@ -13,22 +13,28 @@ const formReducer: Reducer<FormState, FormActionTypes> = (
     action: any
 ) => {
     switch (action.type) {
-        case "CHANGE_FORM_TYPE":
+        case actions.CHANGE_FORM_TYPE:
             return {
                 ...state,
                 formType: action.formType
             };
-        case "ON_URL_CHANGE":
+        case actions.ON_URL_CHANGE:
             return {
                 ...state,
                 url: action.url
             };
-        case "ON_CONVERT_TO_CHANGE":
+        case actions.ON_CONVERT_TO_CHANGE:
             return {
                 ...state,
                 convertTo: action.convertTo
             };
+        case actions.ON_FILE_CHANGE:
+            return {
+                ...state,
+                file: action.file
+            }
     }
     return state;
 };
+
 export default formReducer;
