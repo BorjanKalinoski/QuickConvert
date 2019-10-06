@@ -1,14 +1,21 @@
 import * as React from 'react';
-import Container from "./Container/Container";
-import {AppState} from "../store/types";
+import {Provider} from "react-redux";
+import {Store} from "redux";
 
-export default class App extends React.Component<any, {}> {
-    render() {
-        return (
-            <React.Fragment>
-                <Container/>
-            </React.Fragment>
-        );
-    }
+
+import Container from "./Container/Container";
+import {AppState} from "../store";
+
+interface Props {
+    store: Store<AppState>;
+}
+
+const App: React.FC<Props> = props => {
+    return (
+        <Provider store={props.store}>
+            <Container/>
+        </Provider>
+    );
 };
 
+export default App;

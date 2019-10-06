@@ -1,36 +1,53 @@
 import * as React from 'react';
+import {connect} from 'react-redux';
+import {AppState} from "../../store";
+import {onChangeFormType, onUrlChange} from '../../store/form/actions';
+// @ts-ignore
 import Col from "antd/lib/grid/col"
+// @ts-ignore
 import Row from "antd/lib/grid/row"
-import { Button } from 'antd';
+// @ts-ignore
+import {Button} from 'antd';
 
 import './Container.less';
 import YoutubeForm from "../AppForm/AppForm";
+import {FormState, FormType} from "../../store/form/types";
 
-import {AppState, FormState} from '../../store/types';
-import {changeFormType} from '../../store/actions';
+interface DispatchProps {
+    onUrlChange: typeof onUrlChange;
+    onChangeFormType: typeof onChangeFormType;
+}
 
 interface StateProps {
-    formState: FormState;
+    url: FormState['url'];
+    formType: FormState['formType'];
+    convertTo: FormState['convertTo'];
 }
-export default class Container extends React.Component<Props> {
 
-    private handleFormTypeChange(type: string): any {
-        return undefined;
+type Props = StateProps & DispatchProps;
+
+export class Container extends React.Component<Props, {}> {
+
+    componentDidMount(): void {
+
     }
 
     render() {
-        const a = 'b';
+        const {onChangeFormType} = this.props;
+
+        const {formType} = this.props;
+        console.log(formType);
         return (
             <React.Fragment>
                 {
                     //@ ts-ignore
-                    true || false ?
+                    !formType ?
                         (<Row type="flex" justify="center" align='middle' className='Container' gutter={0}>
                             <Col span={14}>
                                 <Button
                                     size='large'
                                     block
-                                    onClick={this.handleFormTypeChange('yt')}
+                                    onClick={() => onChangeFormType(FormType.YOUTUBE)}
                                 >
                                     Paste a youtube link
                                 </Button>
@@ -40,8 +57,7 @@ export default class Container extends React.Component<Props> {
                                 <Button
                                     size='large'
                                     block
-                                    onClick={this.handleFormTypeChange('cust')}
-
+                                    onClick={() => onChangeFormType(FormType.BASIC)}
                                 >
                                     Upload a file
                                 </Button>
@@ -52,7 +68,16 @@ export default class Container extends React.Component<Props> {
             </React.Fragment>
         );
     }
-};
-const mapStateToProps = (state: AppState) => ({
-    formType: state.formType,
-});
+}
+
+export default connect<StateProps, DispatchProps, {}, AppState>(
+    state => ({
+        formType: state.form.formType,
+        url: state.form.url,
+        convertTo: state.form.convertTo
+    }),
+    {
+        onChangeFormType,
+        onUrlChange
+    }
+)(Container);
