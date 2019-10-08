@@ -4,8 +4,8 @@ const sharp = require('sharp');
 const MulterError = require('multer').MulterError;
 const {BadFileTypeError, ExceededFileSizeError, ConversionNotSupportedError} = require('../errors/errors');
 const mimeTypes = process.env.MIME_TYPES.split(' ');
-const fileExtensions = process.env.FILE_EXTENSIONS.split(' ');
-const convertFileExtensions = process.env.CONVERT_FILE_EXTENSIONS.split(' ');
+const allowedImageFileExtensions = process.env.ALLOWED_IMAGE_FILE_EXTENSIONS.split(' ');
+const convertImageFileExtensions = process.env.CONVERT_IMAGE_FILE_EXTENSIONS.split(' ');
 
 const validateFiles = (req, res, next) => {
     const N = _.get(req.files, 'length');
@@ -16,7 +16,7 @@ const validateFiles = (req, res, next) => {
         throw new BadFileTypeError();
     }
     req.body.convertTo = req.body.convertTo.toLowerCase();
-    if (!convertFileExtensions.includes(req.body.convertTo)) {
+    if (!convertImageFileExtensions.includes(req.body.convertTo)) {
         throw new ConversionNotSupportedError();
     }
     for (let i = 0; i < N; i++) {
@@ -29,7 +29,7 @@ const isFileValid = (file) => {
     const _file = _.pick(file, ['originalname', 'mimetype', 'buffer']);
     if (!_file
         || (!mimeTypes.includes(_file.mimetype)
-            && !fileExtensions.includes(_file.originalname.split('.').pop()))
+            && !allowedImageFileExtensions.includes(_file.originalname.split('.').pop()))
     ) {
         throw new BadFileTypeError();
     } else if (_file.size > process.env.DATABASE_URL) {

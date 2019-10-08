@@ -124,6 +124,7 @@ export class AppForm extends React.Component<Props, {}> {
     }
 
     handleSubmit(e: any) {
+        console.log('submitting');
         console.log(e);
         e.preventDefault();
         axios.post('/videos/download', {

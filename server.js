@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const {BadRequestError} = require('./errors/errors');
 const MulterError = require('multer').MulterError;
 
@@ -10,16 +10,15 @@ const server = app.listen(3000, () => {
 //    TODO logger
     console.log('server listening on port 3000');
 });
+// mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true, useCreateIndex: true});
+// const db = mongoose.connection;
 
-mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true, useCreateIndex: true});
-const db = mongoose.connection;
-
-db.on('error', (error) => {
-    throw new Error(error);
-});
-db.once('open', () => {
+// db.on('error', (error) => {
+//     throw new Error(error);
+// });
+// db.once('open', () => {
 //    TODO logger
-});
+// });
 const imagesRouter = require('./routes/images');
 const videosRouter = require('./routes/videos');
 

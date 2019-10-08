@@ -1,8 +1,7 @@
 const ytdl = require('ytdl-core');
 const {InvalidVideoError, ConversionNotSupportedError} = require('../errors/errors');
-const convertToVideoExtensions = process.env.CONVERT_TO_VIDEO_EXTENSIONS.split(' ');
-const convertToAudioExtensions = process.env.CONVERT_TO_AUDIO_EXTENSIONS.split(' ');
-const ffmpeg = require('fluent-ffmpeg');
+const convertVideoExtensions = process.env.CONVERT_VIDEO_FILE_EXTENSIONS.split(' ');
+const convertAudioExtensions = process.env.CONVERT_AUDIO_FILE_EXTENSIONS.split(' ');
 
 const validateVideo = (req, res, next) => {
     let {url, toFormat} = req.body;
@@ -12,11 +11,11 @@ const validateVideo = (req, res, next) => {
     const match = url.match(regExp);
     if (!url && match && match[2].length === 11) {
         throw new InvalidVideoError();
-    }else if (!toFormat || (!convertToVideoExtensions.includes(toFormat) && !convertToAudioExtensions.includes(toFormat))) {
+    }else if (!toFormat || (!convertVideoExtensions.includes(toFormat) && !convertAudioExtensions.includes(toFormat))) {
         throw new ConversionNotSupportedError();
     }
 
-    req.body.mime = convertToAudioExtensions.includes(toFormat) ? 'audio' : 'video';
+    req.body.mime = convertAudioExtensions.includes(toFormat) ? 'audio' : 'video';
 
     return next();
 };
