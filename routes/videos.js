@@ -12,14 +12,17 @@ const {validateVideo, downloadVideo, convertVideo} = require('../middlewares/vid
 // const upload = multer();
 
 router.post('/download', validateVideo, downloadVideo, async (req, res) => {
+    console.log('da');
 
-    const {readableStream, toFormat, title, mime} = req.body;
+    const {readableStream, convertTo, title, mime} = req.body;
 
-    res.contentType(`${mime}/${toFormat}`);
-    res.attachment(`${title}.${toFormat}`);
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.contentType(`${mime}/x-flv`);
+    res.attachment(`${title}.flv`);
 
     ffmpeg(readableStream)
-        .format(toFormat)
+        .format('flv')
         .videoCodec('libx264')
         .audioCodec('copy')
         // .outputOptions(['-preset slow'])

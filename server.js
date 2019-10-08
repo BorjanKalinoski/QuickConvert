@@ -1,7 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const app = express();
+
 // const mongoose = require('mongoose');
 const {BadRequestError} = require('./errors/errors');
 const MulterError = require('multer').MulterError;
@@ -24,6 +26,7 @@ const videosRouter = require('./routes/videos');
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
+app.use(cors());
 app.use('/images', imagesRouter);
 app.use('/videos', videosRouter);
 app.use((error, req, res, _next) => {

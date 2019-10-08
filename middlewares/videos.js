@@ -4,24 +4,26 @@ const convertVideoExtensions = process.env.CONVERT_VIDEO_FILE_EXTENSIONS.split('
 const convertAudioExtensions = process.env.CONVERT_AUDIO_FILE_EXTENSIONS.split(' ');
 
 const validateVideo = (req, res, next) => {
-    let {url, toFormat} = req.body;
-    toFormat = toFormat.toLowerCase();
-    req.body.toFormat = req.body.toFormat.toLowerCase();
+    let {url, convertTo} = req.body;
+    convertTo = convertTo.toLowerCase();
+    req.body.toFormat = req.body.convertTo.toLowerCase();
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/;
     const match = url.match(regExp);
     if (!url && match && match[2].length === 11) {
         throw new InvalidVideoError();
-    }else if (!toFormat || (!convertVideoExtensions.includes(toFormat) && !convertAudioExtensions.includes(toFormat))) {
+    }else if (!convertTo || (!convertVideoExtensions.includes(convertTo) && !convertAudioExtensions.includes(convertTo))) {
         throw new ConversionNotSupportedError();
     }
+    console.log('da');
 
-    req.body.mime = convertAudioExtensions.includes(toFormat) ? 'audio' : 'video';
+    req.body.mime = convertAudioExtensions.includes(convertTo) ? 'audio' : 'video';
+
 
     return next();
 };
 
 const downloadVideo = async (req, res, next) => {
-    const {url, toFormat} = req.body;
+    const {url} = req.body;
     const basicVideoInfo = await ytdl.getBasicInfo(url);
 
     req.body.readableStream = ytdl(url);
