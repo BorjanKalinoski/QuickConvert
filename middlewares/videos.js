@@ -14,10 +14,8 @@ const validateVideo = (req, res, next) => {
     }else if (!convertTo || (!convertVideoExtensions.includes(convertTo) && !convertAudioExtensions.includes(convertTo))) {
         throw new ConversionNotSupportedError();
     }
-    console.log('da');
 
     req.body.mime = convertAudioExtensions.includes(convertTo) ? 'audio' : 'video';
-
 
     return next();
 };

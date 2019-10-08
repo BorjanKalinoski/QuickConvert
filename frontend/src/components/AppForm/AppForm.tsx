@@ -1,7 +1,6 @@
 import * as React from 'react';
 import './AppForm.less';
 import {Form, Input, TreeSelect} from 'antd';
-
 import Button from "antd/lib/button";
 import Col from "antd/lib/grid/col"
 import Row from "antd/lib/grid/row"
@@ -126,8 +125,6 @@ export class AppForm extends React.Component<Props, {}> {
 
     handleSubmit(e: any) {
         e.preventDefault();
-        console.log('submitting');
-        console.log(e);
         axios({
             method: 'POST',
             url: 'http://127.0.0.1:3000/videos/download',
@@ -148,7 +145,6 @@ export class AppForm extends React.Component<Props, {}> {
         });
     }
 }
-
 
 export default connect<StateProps, DispatchProps, {}, AppState>(
     state => ({

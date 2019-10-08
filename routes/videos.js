@@ -12,7 +12,6 @@ const {validateVideo, downloadVideo, convertVideo} = require('../middlewares/vid
 // const upload = multer();
 
 router.post('/download', validateVideo, downloadVideo, async (req, res) => {
-    console.log('da');
 
     const {readableStream, convertTo, title, mime} = req.body;
 
