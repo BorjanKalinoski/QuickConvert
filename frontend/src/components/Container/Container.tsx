@@ -8,7 +8,7 @@ import './Container.less';
 import {FormType} from "../../store/form/types";
 import AppForm from "../AppForm/AppForm";
 import {onChangeFormType} from '../../store/form/actions';
-
+import YoutubeForm from "../YoutubeForm/YoutubeForm";
 interface DispatchProps {
     onChangeFormType: typeof onChangeFormType;
 }
@@ -28,7 +28,7 @@ export class Container extends React.Component<Props, {}> {
         return (
             <React.Fragment>
                 {
-                    formType === FormType.NONE ?
+                    formType === FormType.BASIC ?
                         (<Row type="flex" justify="center" align='middle' className='Container' gutter={0}>
                             <Col span={14}>
                                 <Button
@@ -36,7 +36,7 @@ export class Container extends React.Component<Props, {}> {
                                     block
                                     onClick={() => onChangeFormType(FormType.YOUTUBE)}
                                 >
-                                    Paste a youtube link
+                                    Paste a ss link
                                 </Button>
                             </Col>
                             <Col span={14}>OR</Col>
@@ -50,7 +50,8 @@ export class Container extends React.Component<Props, {}> {
                                 </Button>
                             </Col>
                         </Row>)
-                        : (<AppForm formType={formType}/>)
+                        : (<YoutubeForm />)
+                        //(<AppForm formType={formType}/>)
                 }
             </React.Fragment>
         );

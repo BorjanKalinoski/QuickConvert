@@ -153,7 +153,7 @@ export default connect<StateProps, DispatchProps, {}, AppState>(
         convertTo: state.form.convertTo
     }),
     {
-        onConvertToChange,
+        onConvertToChange,  
         onUrlChange,
         onFileChange
     }

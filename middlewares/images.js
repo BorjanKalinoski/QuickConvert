@@ -18,7 +18,7 @@ const validateFiles = (req, res, next) => {
     req.body.convertTo = req.body.convertTo.toLowerCase();
     if (!convertImageFileExtensions.includes(req.body.convertTo)) {
         throw new ConversionNotSupportedError();
-    }
+    } 
     for (let i = 0; i < N; i++) {
         isFileValid(req.files[i]);
     }
