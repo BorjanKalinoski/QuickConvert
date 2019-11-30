@@ -1,61 +1,84 @@
 import * as React from 'react';
-// import './YoutubeForm.less';
 
-import {Formik, Form, Field, ErrorMessage } from 'formik';
+import {Formik, Form, Field, ErrorMessage, FieldProps} from 'formik';
 
-import {Input} from 'antd';
+import {Input, TreeSelect,Form as AForm, Button} from 'antd';
+const FormItem = AForm.Item;
+const { TreeNode } = TreeSelect;
 
-const YoutubeForm =()=>(
-    <div>
-        <h1>This is a youtube Form</h1>
-        <Formik
-            initialValues={{url:'',convertTo:''}}
+interface FormValues {
+    url:string;
+    convertTo:string;//TODO convert to types
+}
+const YoutubeForm =()=>{
+    return (
+        <Formik <FormValues,{}>
+            initialValues={{url:'',convertTo:'Convert to!'}}
             validate={values=>{
                 const errors:any={}
-                if (!values.url){//validate url
-                    errors.url='Required'
-
-                }else if(!values.convertTo){
-                    errors.convertTo='Invalid conversion type'        
+                if (!values.url){
+                    errors.url="Rqeuired"
+                }
+                if (values.convertTo==='Convert to!'){
+                    errors.convertTo="Required convert to"
                 }
                 return errors;
             }}
             onSubmit={(values,{setSubmitting})=>{
-                setTimeout(()=>{
-                    alert(JSON.stringify(values,null,2));
+                   setTimeout(() => {
+                    alert(JSON.stringify(values, null, 2));
                     setSubmitting(false);
-                },400);
-
+                  }, 400);
             }}
         >
-            {({isSubmitting})=>(
-                <Form>
-                    <Field name='url' placeholder='url link' component={Input}/>
-                    {/* <Field name='url'
-                        render={({field})=>
-                        <Input
-                        {...field}
-                                        placeholder="Enter a valid youtube link"
-                                        onChange={(value) => setFieldValue)}
-                                        value={url}
-                                        required
-                                    />
-                        console.log(field)
+
+            <Form>
+                <Field name='url'>
+                    {({field,form, meta}:FieldProps)=>
+                        <Input 
+                            {...field}
+                            placeholder='Enter a youtube link'
+                        />
                     }
-                    /> */}
-                    <ErrorMessage name='url' component='div'/>
-                    <Field name='convertTo'  />
-                    <ErrorMessage name='url' component='div'/>
-                    <button type='submit' disabled={isSubmitting}>
-                        Submit
-                    </button>
-
-                </Form>
-
-
-            )}
-
-            </Formik>
-    </div>
-)
+                </Field>
+                <ErrorMessage name="url" />
+                <Field name='convertTo'>
+                    {({field,form,meta}:FieldProps)=>
+                    <TreeSelect
+                            name
+                            {...field}
+                            onChange = {value => form.setFieldValue(field.name, value)}
+                            onBlur ={ () => form.setFieldTouched(field.name, true)}
+                            value={meta.touched ? field.value : meta.initialValue}
+                        >
+                            <TreeNode
+                                value='Audio'
+                                title='Audio'
+                                disabled
+                            >
+                                <TreeNode value='mp3' title='mp3'/>
+                                <TreeNode value='aac' title='aac'/>
+                                <TreeNode value='wma' title='wma'/>
+                            </TreeNode>
+                            <TreeNode
+                                value='Video'
+                                title='Video'
+                                disabled
+                            >
+                                <TreeNode value='mp4' title='mp4'/>
+                                <TreeNode value='avi' title='avi'/>
+                                <TreeNode value='mov' title='mov'/>
+                            </TreeNode>
+                        </TreeSelect>
+                    }
+                </Field>
+                <FormItem>
+                    <Button htmlType="submit">
+                            Submit
+                    </Button>
+                </FormItem>
+            </Form>
+        </Formik>
+    )
+}
 export default YoutubeForm;
