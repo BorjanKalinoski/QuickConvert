@@ -6,24 +6,26 @@ const ffmpeg = require('fluent-ffmpeg');
 //     console.log('Available formats:');
 //     console.log(formats);
 // });
-const {validateVideo, downloadVideo, convertVideo} = require('../middlewares/videos');
+const {validateVideo, downloadVideo} = require('../middlewares/videos');
 // const {validateFiles, convertFiles, zipFiles} = require('../middlewares/images');
 // const multer = require('multer');
 // const upload = multer();
 
 router.post('/download', validateVideo, downloadVideo, async (req, res) => {
 
-    const {readableStream, convertTo, title, mime} = req.body;
+    const {readableStream, convertTo, title, mimeType} = req.body;
 
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    res.contentType(`${mime}/x-flv`);
-    res.attachment(`${title}.flv`);
+    res.header('content-disposition', `attachment; filename="${title}"`);
+    res.contentType(mimeType);
+    // res.attachment(`${title}.${convertTo}`);
 
     ffmpeg(readableStream)
-        .format('flv')
+        .format(convertTo)
         .videoCodec('libx264')
-        .audioCodec('copy')
+        // .audioCodec('copy')
+        // .videoCodec('copy')
         // .outputOptions(['-preset slow'])
         // .videoBitrate('5000k')
         .on('end', (err) => {
@@ -32,6 +34,7 @@ router.post('/download', validateVideo, downloadVideo, async (req, res) => {
         .on('error', (err) => {
             console.log('er' + err.message);
             console.log(err);
+            // return res.status(400).json({error:err.message}).end();
         })
         .on('stderr', (stderrLine) => {
             console.log('Stderr output: ' + stderrLine);

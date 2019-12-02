@@ -14,6 +14,28 @@ export const CHANGE_FORM_TYPE = 'CHANGE_FORM_TYPE';
 export const ON_URL_CHANGE = 'ON_URL_CHANGE';
 export const ON_CONVERT_TO_CHANGE = 'ON_CONVERT_TO_CHANGE';
 export const ON_FILE_CHANGE = 'ON_FILE_CHANGE';
+export const CONVERT_TO_AUDIO_EXTENSIONS=['mp3','wav', 'aac','m4a'];
+export const CONVERT_TO_VIDEO_EXTENSIONS=['mp4','flv','avi','wmv','mov'];
+export const MIME_TYPES = new Map();
+
+CONVERT_TO_AUDIO_EXTENSIONS.forEach(element => {
+    if(element==='mp3'){
+        MIME_TYPES.set(element,'audio/mpeg');
+    }else{
+        MIME_TYPES.set(element,`audio/${element}`)
+    }
+});
+CONVERT_TO_VIDEO_EXTENSIONS.forEach(element=>{
+    if(element==='flv') {
+        MIME_TYPES.set(element,`video/x-${element}`)
+    }else if(element==='wmv') {
+        MIME_TYPES.set(element,`video/x-ms-wmv`); 
+    }else {
+        MIME_TYPES.set(element,`video/${element}`);
+    }//TODO mov
+});
+export const CONVERT_TO_EXTENSIONS = CONVERT_TO_AUDIO_EXTENSIONS.concat(CONVERT_TO_VIDEO_EXTENSIONS);
+
 
 export enum actions {
     CHANGE_FORM_TYPE = 'CHANGE_FORM_TYPE',
