@@ -48,17 +48,12 @@ const YoutubeForm:React.FC<{}> = () => {
                     },
                     responseType: 'blob'
                 }).then(res => {
-                    console.log(JSON.stringify(res));
                     const file = new Blob([res.data], {
                         type: MIME_TYPES.get(convertTo)
                     });
                     const fileURL = URL.createObjectURL(file);
-                    // window.open(fileURL);
-                    // var iframe = document.createElement("iframe");
-                    // iframe.setAttribute("src", fileURL);
-                    // iframe.setAttribute("style", "display: none");
-                    // document.body.appendChild(iframe);
-                    saveAs(file,'file.'+convertTo);
+                    const filename=res.headers['content-disposition'].split('filename=')[1].slice(1,-1);
+                    saveAs(fileURL, filename);
                 }).catch(err => {
                     console.log(err);
                 }).finally(()=>{

@@ -16,14 +16,16 @@ router.post('/download', validateVideo, downloadVideo, async (req, res) => {
     const {readableStream, convertTo, title, mimeType} = req.body;
 
     res.header('Access-Control-Allow-Origin', '*');
+    // res.header('Access-Control-Allow-Headers', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    res.header('content-disposition', `attachment; filename="${title}"`);
+    // res.header('content-disposition', `attachment; filename="${title}"`);
     res.contentType(mimeType);
-    // res.attachment(`${title}.${convertTo}`);
+    res.attachment(title);
 
+    console.log(title);
     ffmpeg(readableStream)
         .format(convertTo)
-        .videoCodec('libx264')
+        // .videoCodec('libx264')
         // .audioCodec('copy')
         // .videoCodec('copy')
         // .outputOptions(['-preset slow'])

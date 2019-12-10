@@ -26,7 +26,12 @@ const videosRouter = require('./routes/videos');
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({
+    credentials:true,
+    exposedHeaders:[
+        'Content-Disposition'
+    ]
+}));
 app.use('/images', imagesRouter);
 app.use('/videos', videosRouter);
 app.use((error, req, res, _next) => {
