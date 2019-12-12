@@ -21,7 +21,6 @@ convertVideoExtensions.forEach(element=>{
     }//TODO mov
 });
 const validateVideo = (req, res, next) => {
-
     let {url, convertTo} = req.body;
     convertTo = convertTo.toLowerCase();
     req.body.toFormat = req.body.convertTo.toLowerCase();

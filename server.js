@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
 const app = express();
 
 // const mongoose = require('mongoose');
@@ -21,10 +22,11 @@ const server = app.listen(3000, () => {
 // db.once('open', () => {
 //    TODO logger
 // });
-const imagesRouter = require('./routes/images');
+// const imagesRouter = require('./routes/images');
 const videosRouter = require('./routes/videos');
 
-app.use(express.static('public'));
+// app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'frontend/build')));
 app.use(bodyParser.json());
 app.use(cors({
     credentials:true,
@@ -32,8 +34,9 @@ app.use(cors({
         'Content-Disposition'
     ]
 }));
-app.use('/images', imagesRouter);
-app.use('/videos', videosRouter);
+// app.use('/api/images', imagesRouter);
+
+app.use('/api/videos', videosRouter);
 app.use((error, req, res, _next) => {
     if (error instanceof BadRequestError) {
         return res.status(400).json({
