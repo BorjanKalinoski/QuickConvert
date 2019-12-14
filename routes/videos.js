@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const ffmpeg = require('fluent-ffmpeg');
-
+const log4js = require('log4js');
+const logger = log4js.getLogger();
+logger.level = 'debug';
 
 const {validateVideo, downloadVideo} = require('../middlewares/videos');
 
@@ -9,46 +11,44 @@ const convertVideo = (readableStream, convertTo, res) => {
     return new Promise(((resolve, reject) => {
         ffmpeg(readableStream)
             .format(convertTo)
-            // .videoCodec('libx264')
             .on('end', () => {
-                console.log('conversion finished!');
+                logger.info('Finished converting video');
                 resolve();
             })
-            .on('stderr', function (stderrLine) {
-
-                console.log('Stderr output: ' + stderrLine);
+            .on('stderr', (stderrLine) => {
+                logger.info(`Converting video: ${stderrLine}`);
             })
             .on('error', (err, stdout, stderr) => {
-                console.log(err.message);
-                console.log(stdout);
-                console.log(stderr);
-                res.header('Content-Disposition', '');
-                res.contentType('application/json;charset=utf-8');
                 reject(err);
             })
             .pipe(res);
     }));
 };
+
 router.post('/download', validateVideo, downloadVideo, async (req, res) => {
     try {
-
         const {readableStream, convertTo, title, mimeType} = req.body;
-        res.header('Access-Control-Allow-Origin', '*');
-        res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-        res.contentType(mimeType);
+        res.set({
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+            'Content-Type': mimeType
+        });
         res.attachment(title);
-        convertVideo(readableStream, convertTo, res)
-            .catch(err => {
-                res.header('Content-Disposition', '');
-                res.contentType('application/json;charset=utf-8');
-                return res.status(400).json({message: err.message}).end();
-            });
-    }
-    catch (e) {
-        console.log('error is');
-        console.log(e.message);
+        if (convertTo === 'mp4') {
+            readableStream.pipe(res);
+        } else {
+            convertVideo(readableStream, convertTo, res)
+                .catch(err => {
+                    logger.error(`Error converting video: ${err.message}`);
+                    res.header('Content-Disposition', '');
+                    res.contentType('application/json;charset=utf-8');
+                    return res.status(400).json({message: err.message}).end();
+                });
+        }
+    } catch (e) {
+        logger.error(`Error converting video: ${e.message}`);
+        return res.status(400).json({message: e.message}).end();
     }
 });
-
 
 module.exports = router;

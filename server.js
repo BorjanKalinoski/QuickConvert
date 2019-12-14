@@ -4,14 +4,17 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
 const app = express();
-
+const log4js = require('log4js');
+const logger = log4js.getLogger();
+logger.level = 'debug';
 // const mongoose = require('mongoose');
 const {BadRequestError} = require('./errors/errors');
 const MulterError = require('multer').MulterError;
 
-const server = app.listen(3000, () => {
-//    TODO logger
-    console.log('server listening on port 3000');
+
+
+app.listen(process.env.PORT | 3000, () => {
+    logger.debug(`Server listening on port ${process.env.PORT | 3000}`);
 });
 // mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true, useCreateIndex: true});
 // const db = mongoose.connection;
@@ -22,10 +25,10 @@ const server = app.listen(3000, () => {
 // db.once('open', () => {
 //    TODO logger
 // });
+
 // const imagesRouter = require('./routes/images');
 const videosRouter = require('./routes/videos');
 
-// app.use(express.static('public'));
 app.use(express.static(path.join(__dirname, 'frontend/build')));
 app.use(bodyParser.json());
 app.use(cors({
@@ -34,10 +37,13 @@ app.use(cors({
         'Content-Disposition'
     ]
 }));
-// app.use('/api/images', imagesRouter);
 
+// app.use('/api/images', imagesRouter);
 app.use('/api/videos', videosRouter);
+
 app.use((error, req, res, _next) => {
+    logger.error(`Unexpected error ${error.message}`);
+
     if (error instanceof BadRequestError) {
         return res.status(400).json({
             error: error.message
@@ -49,6 +55,7 @@ app.use((error, req, res, _next) => {
             }).end();
         }
     }
+
     return res.status(res.status || 500).json({
         error: {
             message: error.message
