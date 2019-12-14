@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server",
-    "buildDev": "webpack-dev-server --open --config webpack.dev.js",
-    "buildProd": "webpack --config webpack.prod.js"
+    "start:dev": "webpack-dev-server",
+    "build:dev": "webpack-dev-server --open --config webpack.dev.js",
+    "build:prod": "webpack --config webpack.prod.js"
   },
   "keywords": [],
   "author": "",
