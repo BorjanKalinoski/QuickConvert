@@ -14,8 +14,8 @@ export const CHANGE_FORM_TYPE = 'CHANGE_FORM_TYPE';
 export const ON_URL_CHANGE = 'ON_URL_CHANGE';
 export const ON_CONVERT_TO_CHANGE = 'ON_CONVERT_TO_CHANGE';
 export const ON_FILE_CHANGE = 'ON_FILE_CHANGE';
-export const CONVERT_TO_AUDIO_EXTENSIONS=['mp3','wav', 'aac','m4a'];
-export const CONVERT_TO_VIDEO_EXTENSIONS=['mp4','flv','avi','wmv','mov'];
+export const CONVERT_TO_AUDIO_EXTENSIONS = ['mp3', 'wav'];
+export const CONVERT_TO_VIDEO_EXTENSIONS = ['mp4', 'flv', 'avi'];
 export const MIME_TYPES = new Map();
 
 CONVERT_TO_AUDIO_EXTENSIONS.forEach(element => {
@@ -64,6 +64,11 @@ interface OnFileChangeAction {
     type: typeof ON_FILE_CHANGE;
     file: any;
 }
+
+export interface ErrorDTO {
+    message: string;
+}
+
 
 export type FormActionTypes =
     ChangeFormTypeAction

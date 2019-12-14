@@ -3,7 +3,13 @@ import {Formik, Form, Field, FieldProps} from 'formik';
 import {Input, TreeSelect, Form as AForm, Button, Alert} from 'antd';
 import axios from 'axios';
 import {saveAs} from 'file-saver';
-import {CONVERT_TO_EXTENSIONS, MIME_TYPES, CONVERT_TO_AUDIO_EXTENSIONS, CONVERT_TO_VIDEO_EXTENSIONS} from '../../store/form/types';
+import {
+    CONVERT_TO_EXTENSIONS,
+    MIME_TYPES,
+    CONVERT_TO_AUDIO_EXTENSIONS,
+    CONVERT_TO_VIDEO_EXTENSIONS,
+    ErrorDTO
+} from '../../store/form/types';
 
 interface FormValues {
     url: string;
@@ -11,9 +17,26 @@ interface FormValues {
 }
 
 const FormItem = AForm.Item;
-const { TreeNode } = TreeSelect;
+const {TreeNode} = TreeSelect;
 
-const YoutubeForm:React.FC<{}> = () => {
+const blobToString = (b): Promise<ErrorDTO> => {
+    let u, x;
+    u = URL.createObjectURL(b);
+    x = new XMLHttpRequest();
+    x.open('GET', u, true);
+    x.send();
+    URL.revokeObjectURL(u);
+    return new Promise((resolve, reject) => {
+        x.onload = (e) => {
+            resolve(JSON.parse(x.responseText));
+        };
+        x.onerror = (err) => {
+            reject({message: x.statusText});
+        };
+    });
+};
+
+const YoutubeForm: React.FC<{}> = () => {
     let errorMessage: string = "";
     return (
         <Formik<FormValues, {}>
@@ -47,23 +70,28 @@ const YoutubeForm:React.FC<{}> = () => {
                         convertTo,
                         url,
                     },
-                    // responseType: 'blob'
+                    responseType: 'blob'
                 }).then(res => {
+                    console.log(res.headers['content-type']);
                     errorMessage = "";
+                    console.log(MIME_TYPES.get(convertTo));
                     const file = new Blob([res.data], {
-                        type: MIME_TYPES.get(convertTo)
+                        type: res.headers['content-type']
                     });
+
+                    console.log('blob is', file);
                     const fileURL = URL.createObjectURL(file);
                     const filename = res.headers['content-disposition'].split('filename=')[1].slice(1, -1);
                     saveAs(fileURL, filename);
                 })
-                    .catch(err => {
-                        if (err.response) {
-                            errorMessage = err.response.data.message;
-                        } else if (err.message) {
-                            errorMessage = err.message;
+                    .catch(async (err) => {
+                        try {
+                            const error: ErrorDTO = await blobToString(new Blob([err.response.data]));
+                            errorMessage = error.message;
+                        } catch (e) {
+                            console.log('this should not happen ', e);
+                            errorMessage = e;
                         }
-
                     })
                     .finally(() => {
                         setSubmitting(false);
@@ -129,15 +157,16 @@ const YoutubeForm:React.FC<{}> = () => {
                         : isSubmitting
                             ? ""
                             : <Alert
-                                    message="Error"
-                                    description={errorMessage}
-                                    type="error"
-                                    showIcon
+                                message="Failed to convert video!"
+                                description={errorMessage}
+                                type="error"
+                                showIcon
                             />
                     }
                 </Form>
             )}
         </Formik>
     );
-}
+};
+
 export default YoutubeForm;

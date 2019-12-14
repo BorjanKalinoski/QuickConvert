@@ -1,14 +1,13 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
 import {AppState} from "../../store";
-import Col from "antd/lib/grid/col"
-import Row from "antd/lib/grid/row"
+import {Col, Row} from "antd/lib/grid"
 import {Button} from 'antd';
 import './Container.less';
 import {FormType} from "../../store/form/types";
-import AppForm from "../AppForm/AppForm";
 import {onChangeFormType} from '../../store/form/actions';
 import YoutubeForm from "../YoutubeForm/YoutubeForm";
+
 interface DispatchProps {
     onChangeFormType: typeof onChangeFormType;
 }
@@ -50,8 +49,7 @@ export class Container extends React.Component<Props, {}> {
                                 </Button>
                             </Col>
                         </Row>)
-                        : (<YoutubeForm />)
-                        //(<AppForm formType={formType}/>)
+                        : (<YoutubeForm/>)
                 }
             </React.Fragment>
         );
