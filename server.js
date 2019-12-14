@@ -14,8 +14,8 @@ const expressLogger = expressPino({ logger });
 const {BadRequestError} = require('./errors/errors');
 const MulterError = require('multer').MulterError;
 
-app.listen(process.env.PORT | 3000, () => {
-    logger.info(`Server listening on port ${process.env.PORT | 3000}`);
+app.listen(process.env.PORT || 3000, () => {
+    logger.info(`Server listening on port ${process.env.PORT || 3000}`);
 });
 
 // mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true, useCreateIndex: true});
