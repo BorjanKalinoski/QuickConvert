@@ -4,18 +4,20 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
 const app = express();
-const log4js = require('log4js');
-const logger = log4js.getLogger();
-logger.level = 'debug';
+const pino = require('pino');
+const expressPino = require('express-pino-logger');
+
+const logger = pino({ level: process.env.LOG_LEVEL || 'info' });
+const expressLogger = expressPino({ logger });
+
 // const mongoose = require('mongoose');
 const {BadRequestError} = require('./errors/errors');
 const MulterError = require('multer').MulterError;
 
-
-
 app.listen(process.env.PORT | 3000, () => {
-    logger.debug(`Server listening on port ${process.env.PORT | 3000}`);
+    logger.info(`Server listening on port ${process.env.PORT | 3000}`);
 });
+
 // mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true, useCreateIndex: true});
 // const db = mongoose.connection;
 
@@ -29,6 +31,7 @@ app.listen(process.env.PORT | 3000, () => {
 // const imagesRouter = require('./routes/images');
 const videosRouter = require('./routes/videos');
 
+app.use(expressLogger);
 app.use(express.static(path.join(__dirname, 'frontend/build')));
 app.use(bodyParser.json());
 app.use(cors({
