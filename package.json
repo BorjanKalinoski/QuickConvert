@@ -10,7 +10,7 @@
     "frontend:dev": "cd frontend && rm -rf build/ && npm run build:dev",
     "frontend:prod": "cd frontend && rm -rf build/ && npm run build:prod",
     "start:dev": "concurrently \"npm run devStart\" \"npm run frontend:dev\"",
-    "start:prod": "concurrently \"npm run frontendProd\" \"npm run backend\""
+    "start:prod": "concurrently \"npm run frontend:prod\" \"npm run backend\""
   },
   "keywords": [],
   "author": "",
