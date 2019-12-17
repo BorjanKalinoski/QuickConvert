@@ -9,9 +9,7 @@
     "backend": "node server.js",
     "frontend:dev": "cd frontend && rm -rf build/ && npm run build:dev",
     "frontend:prod": "cd frontend && rm -rf build/ && npm run build:prod",
-    "start:dev": "concurrently \"npm run devStart\" \"npm run frontend:dev\"",
-    "start:prod": "concurrently \"npm run frontend:prod\" \"npm run backend\"",
-    "heroku-postbuild": "npm install && cd frontend && npm install"
+    "start": "npm install && npm start"
   },
   "keywords": [],
   "author": "",
