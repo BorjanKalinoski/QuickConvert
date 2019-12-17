@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const ffmpeg = require('fluent-ffmpeg');
-const log4js = require('log4js');
-const logger = log4js.getLogger();
+const pino = require('pino');
+const logger = pino({ level: process.env.LOG_LEVEL || 'info' });
 logger.level = 'debug';
 
 const {validateVideo, downloadVideo} = require('../middlewares/videos');
