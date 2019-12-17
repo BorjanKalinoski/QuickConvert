@@ -8,7 +8,7 @@
     "backend": "node server.js",
     "frontend:dev": "cd frontend && rm -rf build/ && npm run build:dev",
     "frontend:prod": "cd frontend && rm -rf build/ && npm run build:prod",
-    "start": "npm install && node server.js"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
