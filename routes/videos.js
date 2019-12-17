@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 const ffmpeg = require('fluent-ffmpeg');
+ffmpeg.setFfmpegPath(ffmpegPath);
 const pino = require('pino');
 const logger = pino({ level: process.env.LOG_LEVEL || 'info' });
 logger.level = 'debug';
