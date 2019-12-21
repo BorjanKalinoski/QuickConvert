@@ -5,10 +5,8 @@
   "main": "server.js",
   "scripts": {
     "devStart": "nodemon server.js",
-    "backend": "node server.js",
-    "frontend:dev": "cd frontend && rm -rf build/ && npm run build:dev",
-    "frontend:prod": "cd frontend && rm -rf build/ && npm run build:prod",
-    "start": "node server.js"
+    "start": "rm -rf node_modules/ && npm install && cd frontend && rm -rf node_modules/ && npm install && rm -rf build/ && npm run build && cd .. && node server.js",
+    "start:dev": "rm -rf node_modules/ &&npm install && concurrently \"npm run devStart\" \"cd frontend && rm -rf node_modules/ && npm install && rm -rf build/ && npm run start\""
   },
   "keywords": [],
   "author": "",
