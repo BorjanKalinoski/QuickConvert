@@ -6,7 +6,7 @@
   "scripts": {
     "startOld": "node server.js",
     "devStart": "nodemon server.js",
-    "heroku-postbuild": "cd frontend && rm -rf node_modules/ package-lock.json && npm install && node node_modules/webpack/bin/webpack.js --config webpack.prod.js",
+    "heroku-postbuild": "cd frontend && node node_modules/webpack/bin/webpack.js --config webpack.prod.js",
     "start":"node server.js",
     "startDev": "rm -rf node_modules/ &&npm install && concurrently \"npm run devStart\" \"cd frontend && rm -rf node_modules/ && npm install && rm -rf build/ && npm run start\""
   },
