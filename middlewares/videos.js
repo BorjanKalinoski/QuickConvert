@@ -25,10 +25,11 @@ convertVideoExtensions.forEach(element => {
 });
 
 const validateVideo = (req, res, next) => {
-    let {url, convertTo} = req.body;
+    let {convertTo, url} = req.body;
     logger.info(`Validating video: url: ${url} , convert to: ${convertTo}`);
     convertTo = convertTo.toLowerCase();
     req.body.toFormat = req.body.convertTo.toLowerCase();
+
     // eslint-disable-next-line no-useless-escape
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/;
     const match = url.match(regExp);
@@ -40,6 +41,7 @@ const validateVideo = (req, res, next) => {
         logger.error('Invalid conversion type');
         throw new ConversionNotSupportedError();
     }
+
     req.body.mimeType = mimeTypes.get(convertTo);
     return next();
 };
@@ -47,13 +49,15 @@ const validateVideo = (req, res, next) => {
 const downloadVideo = async (req, res, next) => {
     try {
         const {url, convertTo} = req.body;
+
         logger.info('Downloading video');
         const basicVideoInfo = await ytdl.getBasicInfo(url);
+
         req.body.readableStream = ytdl(url);
         req.body.title = `${basicVideoInfo.title}.${convertTo}`;
         return next();
     } catch (e) {
-        logger.error('Error downloading video');
+        logger.error('Error downloading video: \n', e.message);
         return res.status(400).json({message: e.message}).end();
     }
 };
