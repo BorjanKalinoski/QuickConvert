@@ -40,5 +40,8 @@
     "awesome-typescript-loader": "^5.2.1",
     "source-map-loader": "^0.2.4",
     "style-loader": "^1.0.0"
+  },
+  "engines": {
+    "node": "14.x"
   }
 }
