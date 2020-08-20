@@ -10,7 +10,6 @@ logger.level = 'debug';
 const {validateVideo, downloadVideo} = require('../middlewares/videos');
 
 const convertVideo = (readableStream, convertTo, res) => {
-    console.log('wawa');
     return new Promise(((resolve, reject) => {
         if (convertTo === 'mp4') {
             readableStream.pipe(res);

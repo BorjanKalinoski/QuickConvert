@@ -22,13 +22,12 @@ export class Container extends React.Component<Props, {}> {
 
     render() {
         const {onChangeFormType} = this.props;
-
         const {formType} = this.props;
         return (
             <React.Fragment>
                 {
                     formType === FormType.BASIC ?
-                        (<Row type="flex" justify="center" align='middle' className='Container' gutter={0}>
+                        (<Row justify="center" align='middle' className='Container' gutter={0}>
                             <Col span={14}>
                                 <Button
                                     size='large'

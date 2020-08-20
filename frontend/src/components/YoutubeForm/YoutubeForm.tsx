@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Formik, Form, Field, FieldProps} from 'formik';
+import {Formik, Form, Field, FieldProps, ErrorMessage} from 'formik';
 import {Input, TreeSelect, Form as AForm, Button, Alert} from 'antd';
 import axios from 'axios';
 import {saveAs} from 'file-saver';
@@ -38,6 +38,28 @@ const blobToString = (b): Promise<ErrorDTO> => {
 
 const YoutubeForm: React.FC<{}> = () => {
     let errorMessage: string = "";
+    console.log('wat')
+    return <Formik
+        initialValues={{
+            url: "",
+            convertTo: "Convert To!"
+        }}
+        onSubmit={() => {
+            console.log('submit');
+        }}
+    >
+        {({ isSubmitting }) => (
+            <Form>
+                <Field type="email" name="email" />
+                <ErrorMessage name="email" component="div" />
+                <Field type="password" name="password" />
+                <ErrorMessage name="password" component="div" />
+                <button type="submit" disabled={isSubmitting}>
+                    Submit
+                </button>
+            </Form>
+        )}
+    </Formik>;
     return (
         <Formik<FormValues, {}>
             initialValues={{
@@ -99,7 +121,7 @@ const YoutubeForm: React.FC<{}> = () => {
             }}
         >
             {({values, isSubmitting}) => (
-                <Form>
+                <Form className={"Container"}>
                     <Field name='url'>
                         {({field, form, meta}: FieldProps) =>
                             <FormItem
