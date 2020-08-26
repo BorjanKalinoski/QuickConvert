@@ -12,7 +12,7 @@ interface Props {
 
 const App: React.FC<Props> = props => {
     return (
-        <Provider store={props.store}>
+        <Provider store={props.store} >
             <Container/>
         </Provider>
     );
