@@ -9,16 +9,16 @@ logger.level = 'debug';
 
 const {validateVideo, downloadVideo} = require('../middlewares/videos');
 
-const convertVideo = (readableStream, convertTo, res) => {
+const convertVideo = (readableStream, format, res) => {
     return new Promise(((resolve, reject) => {
-        if (convertTo === 'mp4') {
+        if (format === 'mp4') {
             readableStream.pipe(res);
             readableStream.on('end', () => {
                 logger.info('Finished converting video');
             });
         } else {
             ffmpeg(readableStream)
-                .format(convertTo)
+                .format(format)
                 .on('end', () => {
                     logger.info('Finished converting video');
                     resolve();
@@ -36,14 +36,14 @@ const convertVideo = (readableStream, convertTo, res) => {
 
 router.post('/download', validateVideo, downloadVideo, async (req, res) => {
     try {
-        const {readableStream, convertTo, title, mimeType} = req.body;
+        const {readableStream, format, title, mimeType} = req.body;
         res.set({
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
             'Content-Type': mimeType
         });
         res.attachment(title);
-        convertVideo(readableStream, convertTo, res)
+        convertVideo(readableStream, format, res)
             .catch(err => {
                 logger.error(`Error converting video: ${err.message}`);
                 res.header('Content-Disposition', '');
