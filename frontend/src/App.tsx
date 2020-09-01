@@ -12,10 +12,9 @@ import {
 import Alert from "@material-ui/lab/Alert";
 
 const formats = ['mp3', 'mp4', 'wav', 'flv', 'avi'];
-
 const validationSchema = yup.object().shape({
-    url: yup.string().required('This field is required').url('Please enter a valid URL').matches(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/, 'Please enter a valid YouTube URL'),
-    format: yup.string().required('This field is required').oneOf(formats, 'Please enter a valid format')
+    url: yup.string().url('YouTube URL is not valid').matches(/^.*(youtu\.be|youtube\.com|y2u\.be|youtu\.be)\/(watch\?(v|feature)=.{11}|embed\/.{11}|.{11}|[ev]\/.{11})((?=[\/?&]).*|(?![\/?&]))$/img, 'YouTube URL is not valid'),
+    format: yup.string().required('This field is required').oneOf(formats, 'The format is not valid $value')
 });
 
 const MyTextField = (props) => {
@@ -79,7 +78,7 @@ const App = props => {
                                             className={"my-2 w-100"}
                                             label="Link"
                                             placeholder="https://www.youtube.com/watch?v=f02mOEt11OQ"
-                                            autoFocus
+                                            // autoFocus
                                             variant="outlined"
                                         />
                                         <div className={"d-flex align-items-center flex-column w-100 my-4"}>
@@ -96,12 +95,12 @@ const App = props => {
                                             </div>
                                         </div>
                                     </div>
-                                    <ErrorMessage name='url'>
-                                        {(msg) => <Alert severity="error">{msg}</Alert>}
-                                    </ErrorMessage>
-                                    <ErrorMessage name='format'>
-                                        {(msg) => <Alert severity="error">{msg}</Alert>}
-                                    </ErrorMessage>
+                                    {/*<ErrorMessage name='url'>*/}
+                                    {/*    {(msg) => <Alert severity="error">{msg}</Alert>}*/}
+                                    {/*</ErrorMessage>*/}
+                                    {/*<ErrorMessage name='format'>*/}
+                                    {/*    {(msg) => <Alert severity="error">{msg}</Alert>}*/}
+                                    {/*</ErrorMessage>*/}
                                     <div className={"d-flex justify-content-center m-2"}>
                                         <Button disabled={isSubmitting} type="submit">
                                             <GetAppIcon fontSize={'large'}/>
