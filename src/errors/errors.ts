@@ -33,10 +33,10 @@ class InvalidVideoError extends BadRequestError {
     }
 }
 
-module.exports = {
+export default {
     ExceededFileSizeError,
     BadFileTypeError,
     ConversionNotSupportedError,
     InvalidVideoError,
     BadRequestError
-};
+}
