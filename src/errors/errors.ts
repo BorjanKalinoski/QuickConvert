@@ -1,42 +1,20 @@
-class BadRequestError extends Error {
+export class BadRequestError extends Error {
     constructor(message) {
         super(message);
         this.message = message;
     }
 }
 
-class BadFileTypeError extends BadRequestError {
+export class FormatNotValidError extends BadRequestError {
     constructor(message) {
         super(message);
-        this.message = 'File type not supported for conversion';
+        this.message = message;
     }
 }
 
-class ExceededFileSizeError extends BadRequestError {
-    constructor(message) {
-        super(message);
-        this.message = 'File size exceeds the allowed amount';
-    }
-}
-
-class ConversionNotSupportedError extends BadRequestError {
-    constructor(message) {
-        super(message);
-        this.message = 'Cannot convert to provided file type';
-    }
-}
-
-class InvalidVideoError extends BadRequestError {
+export class UrlNotValidError extends BadRequestError {
     constructor(message) {
         super(message);
         this.message = 'Invalid video provided';
     }
-}
-
-export default {
-    ExceededFileSizeError,
-    BadFileTypeError,
-    ConversionNotSupportedError,
-    InvalidVideoError,
-    BadRequestError
 }
