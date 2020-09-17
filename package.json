@@ -17,6 +17,11 @@
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.0.20",
     "@types/yup": "^0.29.7",
+    "@types/body-parser": "^1.19.0",
+    "@types/cors": "^2.8.7",
+    "@types/express": "^4.17.8",
+    "@types/fluent-ffmpeg": "^2.1.15",
+    "@types/node": "^14.10.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv-extended": "^2.8.0",
@@ -27,11 +32,6 @@
     "yup": "^0.29.3"
   },
   "devDependencies": {
-    "@types/body-parser": "^1.19.0",
-    "@types/cors": "^2.8.7",
-    "@types/express": "^4.17.8",
-    "@types/fluent-ffmpeg": "^2.1.15",
-    "@types/node": "^14.10.1",
     "dts-gen": "^0.6.0",
     "ts-node": "^9.0.0",
     "ts-node-dev": "^1.0.0-pre.62"

@@ -2,7 +2,6 @@ import express from 'express';
 import bodyParser from "body-parser";
 import cors from 'cors';
 import path from "path";
-import {BadRequestError} from './errors/errors';
 import {ErrorDTO} from './common/models/ErrorDTO';
 
 import videosRouter from './routes/videos';
@@ -15,7 +14,7 @@ app.listen(PORT, () => {
 });
 
 
-app.use(express.static(path.join(__dirname, 'frontend/build')));
+app.use(express.static(path.join(__dirname, '../frontend/build')));
 app.use(bodyParser.json());
 app.use(cors({
     credentials: true,
@@ -27,17 +26,17 @@ app.use(cors({
 app.use('/api/videos', videosRouter);
 
 app.use((error, req, res, _next) => {
-    // logger.error(`Unexpected error ${error.message}`);
-    let errorDto: ErrorDTO = {
+
+    const errors: ErrorDTO[] = [{
         message: error.message
-    };
-
-    if (error instanceof BadRequestError) {
-        errorDto.message = error.message;
-        return res.status(400).json(errorDto);
+    }];
+    if (error.inner) {
+        error.inner.forEach(error => {
+            errors.push({
+                name: error.path,
+                message: error.message
+            });
+        });
     }
-    console.log('tuka?');
-    console.log(error);
-
-    return res.status(res.status || 500).json(errorDto).end();
+    return res.status(res.status || 500).json(errors).end();
 });

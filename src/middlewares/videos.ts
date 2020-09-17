@@ -27,7 +27,7 @@ const getVideoInfo = async (req: Request, res: Response, next: NextFunction) => 
 
         const info = await ytdl.getBasicInfo(url);
 
-        req.body.readableStream = ytdl(url);
+        req.body.videoStream = ytdl(url);
         req.body.title = `${info.videoDetails.title}.${format}`;
         req.body.mimeType = mimeTypes.get(format);
         return next();
