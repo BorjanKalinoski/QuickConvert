@@ -4,7 +4,7 @@ import mimeTypes from '../common/constants/mime-types';
 import {ErrorDTO} from "../common/models/ErrorDTO";
 import {validationSchema} from "../common/validation/validation";
 
-const validateVideo = async (req: Request, res: Response, next: NextFunction) => {
+export const validateVideo = async (req: Request, res: Response, next: NextFunction) => {
     try {
         await validationSchema.validate(req.body, {abortEarly: false});
 
@@ -21,7 +21,7 @@ const validateVideo = async (req: Request, res: Response, next: NextFunction) =>
     }
 };
 
-const getVideoInfo = async (req: Request, res: Response, next: NextFunction) => {
+export const getVideoInfo = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const {url, format} = req.body;
 
@@ -37,9 +37,4 @@ const getVideoInfo = async (req: Request, res: Response, next: NextFunction) => 
         }];
         return res.status(400).json(errorDto);
     }
-};
-
-module.exports = {
-    validateVideo,
-    getVideoInfo
 };

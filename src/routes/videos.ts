@@ -1,16 +1,18 @@
 import {Request, Response, Router} from 'express';
-const router = Router();
 import ffmpegInstaller from '@ffmpeg-installer/ffmpeg';
-import * as videoController from '../controllers/video-controller';
 import ffmpeg from 'fluent-ffmpeg';
+import {VideoData} from "../common/models/VideoData";
+import {validateVideo, getVideoInfo} from "../middlewares/videos";
+import * as videoController from '../controllers/video-controller';
+
 const ffmpegPath = ffmpegInstaller.path;
 ffmpeg.setFfmpegPath(ffmpegPath);
 
-const {validateVideo, getVideoInfo} = require('../middlewares/videos');
+const router = Router();
 
 const downloadVideo = (req: Request, res: Response) => {
 
-    const {videoStream, format, title, mimeType} = req.body;
+    const {videoStream, format, title, mimeType}: VideoData = req.body;
 
     res.set({
         'Access-Control-Allow-Origin': '*',
