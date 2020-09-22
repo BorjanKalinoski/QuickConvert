@@ -1,0 +1,44 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Download YouTube videos fast and easy!",
+  "main": "app.ts",
+  "scripts": {
+    "start": "ts-node ./src/app.ts",
+    "dev": "ts-node-dev --respawn --transpile-only ./src/app.ts",
+    "old": "cd frontend && node node_modules/webpack/bin/webpack.js --config webpack.prod.js",
+    "startDev": "rm -rf node_modules/ &&npm install && concurrently \"npm run devStart\" \"cd frontend && rm -rf node_modules/ && npm install && rm -rf build/ && npm run start\"",
+    "build-ts": "tsc",
+    "watch-ts": "tsc --watch -p ./packages/*/tsconfig.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.0.20",
+    "@types/body-parser": "^1.19.0",
+    "@types/cors": "^2.8.7",
+    "@types/express": "^4.17.8",
+    "@types/fluent-ffmpeg": "^2.1.15",
+    "@types/node": "^14.10.3",
+    "@types/yup": "^0.29.7",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv-extended": "^2.8.0",
+    "express": "^4.17.1",
+    "fluent-ffmpeg": "^2.1.2",
+    "multer": "^1.4.1",
+    "ts-node": "^9.0.0",
+    "ytdl-core": "^3.2.2",
+    "yup": "^0.29.3",
+    "typescript": "^4.0.2",
+    "@quickconvert/common": "*"
+  },
+  "devDependencies": {
+    "dts-gen": "^0.6.0",
+    "ts-node-dev": "^1.0.0-pre.62"
+  },
+  "engines": {
+    "node": "14.x"
+  }
+}

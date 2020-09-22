@@ -1,8 +1,8 @@
 import ytdl from 'ytdl-core';
 import {Request, Response, NextFunction} from 'express';
-import mimeTypes from '../common/constants/mime-types';
-import {ErrorDTO} from "../common/models/ErrorDTO";
-import {validationSchema} from "../common/validation/validation";
+import mimeTypes from '@quickconvert/common/constants/mime-types';
+import {ErrorDto} from "@quickconvert/common/models/error-dto";
+import {validationSchema} from "@quickconvert/common/validation";
 
 export const validateVideo = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -10,8 +10,9 @@ export const validateVideo = async (req: Request, res: Response, next: NextFunct
 
         return next();
     } catch (e) {
-        const errors: ErrorDTO[] = [];
+        const errors: ErrorDto[] = [];
         e.inner.forEach(error => {
+            console.log(error);
             errors.push({
                 name: error.path,
                 message: error.message
@@ -32,7 +33,7 @@ export const getVideoInfo = async (req: Request, res: Response, next: NextFuncti
         req.body.mimeType = mimeTypes.get(format);
         return next();
     } catch (e) {
-        const errorDto: ErrorDTO[] = [{
+        const errorDto: ErrorDto[] = [{
             message: e.message
         }];
         return res.status(400).json(errorDto);

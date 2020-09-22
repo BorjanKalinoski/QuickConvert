@@ -1,6 +1,7 @@
-import {audioFormats, videoFormats} from "./formatsb";
-const mimeTypes = new Map();
+import {audioFormats, videoFormats} from './formats';
 
+const mimeTypes = new Map();
+console.log('s!');
 audioFormats.forEach(format => {
     if (format === 'mp3') {
         mimeTypes.set(format, 'audio/mpeg');
@@ -16,5 +17,6 @@ videoFormats.forEach(format => {
         mimeTypes.set(format, `video/${format}`);
     }
 });
-
 export default mimeTypes;
+
+

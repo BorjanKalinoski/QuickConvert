@@ -2,7 +2,8 @@ import express from 'express';
 import bodyParser from "body-parser";
 import cors from 'cors';
 import path from "path";
-import {ErrorDTO} from './common/models/ErrorDTO';
+import {ErrorDto} from 'common/models/error-dto';
+
 
 import videosRouter from './routes/videos';
 
@@ -27,7 +28,7 @@ app.use('/api/videos', videosRouter);
 
 app.use((error, req, res, _next) => {
 
-    const errors: ErrorDTO[] = [{
+    const errors: ErrorDto[] = [{
         message: error.message
     }];
     if (error.inner) {

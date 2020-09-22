@@ -1,4 +1,4 @@
-export interface ErrorDTO {
+export interface ErrorDto {
     name?: string;
     message: string;
 }

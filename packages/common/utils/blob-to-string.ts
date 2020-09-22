@@ -1,7 +1,8 @@
-import {ErrorDTO} from "../../../src/common/models/ErrorDTO";
-import {UNEXPECTED_ERROR} from '../../../src/common/constants/errors';
+import {ErrorDto} from "../models/error-dto";
 
-export const blobToErrorDto = (blob: Blob): Promise<ErrorDTO[]> => {
+import {UNEXPECTED_ERROR} from '../constants/errors';
+
+const blobToErrorDto = (blob:Blob): Promise<ErrorDto[]> => {
     const objectUrl = URL.createObjectURL(blob);
     const httpRequest = new XMLHttpRequest();
     httpRequest.open('GET', objectUrl, true);
@@ -20,3 +21,5 @@ export const blobToErrorDto = (blob: Blob): Promise<ErrorDTO[]> => {
         };
     });
 };
+
+export default blobToErrorDto;

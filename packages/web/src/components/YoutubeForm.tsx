@@ -6,7 +6,10 @@ import axios from 'axios';
 import {saveAs} from 'file-saver';
 import {MyTextField, MyRadioButton} from "./CustomFormComponents";
 import Alert from '@material-ui/lab/Alert';
-import {validationSchema, formats, blobToErrorDto} from '../utils';
+// import {validationSchema, formats, blobToErrorDto} from '../utils';
+import {formats} from '@quickconvert/common/constants/formats';
+import {validationSchema} from "@quickconvert/common/validation";
+import blobToErrorDto from '@quickconvert/common/utils/blob-to-string';
 
 const useStyles = makeStyles({
     form: {
@@ -42,7 +45,6 @@ const YoutubeForm = props => {
                     responseType: 'blob',
                     data,
                 });
-
                 const fileBlob: Blob = new Blob([res.data], {
                     type: res.headers['content-type']  // eg. audio/mpeg
                 });
