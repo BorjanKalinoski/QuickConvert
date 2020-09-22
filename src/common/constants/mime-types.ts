@@ -1,5 +1,4 @@
-import {audioFormats, videoFormats} from "./formats";
-console.log('mime types! should be once');
+import {audioFormats, videoFormats} from "./formatsb";
 const mimeTypes = new Map();
 
 audioFormats.forEach(format => {

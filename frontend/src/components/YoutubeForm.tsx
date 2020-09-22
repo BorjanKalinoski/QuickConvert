@@ -1,21 +1,12 @@
 import * as React from 'react';
 import {Form, Formik} from 'formik';
-import * as yup from 'yup';
 import {makeStyles} from '@material-ui/core/styles';
 import {Box, Button, CircularProgress, Grid, TextField} from "@material-ui/core";
 import axios from 'axios';
 import {saveAs} from 'file-saver';
-import MyTextField from "./CustomFormComponents/MyTextField";
-import MyRadioButton from "./CustomFormComponents/MyRadioButton";
-import {ErrorDTO} from "../../../src/common/models/ErrorDTO";
-import {FORMAT_NOT_VALID, URL_NOT_VALID} from '../../../src/common/constants/errors'
-import {audioFormats, videoFormats} from '../../../src/common/constants/formats';
+import {MyTextField, MyRadioButton} from "./CustomFormComponents";
 import Alert from '@material-ui/lab/Alert';
-const formats = [...audioFormats, ...videoFormats];
-const validationSchema = yup.object().shape({
-    url: yup.string().required(URL_NOT_VALID).url(URL_NOT_VALID).matches(/^.*(youtu\.be|youtube\.com|y2u\.be)\/(watch\?(v|feature)=.{11}|embed\/.{11}|.{11}|[ev]\/.{11})((?=[\/?&]).*|(?![\/?&]))$/img, 'YouTube URL is not valid'),
-    format: yup.string().required(FORMAT_NOT_VALID).oneOf(formats, FORMAT_NOT_VALID)
-});
+import {validationSchema, formats, blobToErrorDto} from '../utils';
 
 const useStyles = makeStyles({
     form: {
@@ -33,31 +24,10 @@ const initialValues = {
     format: 'mp3'
 };
 
-const blobToString = (b): Promise<ErrorDTO[]> => {
-    //Needs refactoring, THIS IS ONLY FOR THE ERROR! //ADD THIS TO A DIFFERENT FILE
-    let u, x;
-    u = URL.createObjectURL(b);
-    x = new XMLHttpRequest();
-    x.open('GET', u, true);
-    x.send();
-    URL.revokeObjectURL(u);
-    return new Promise((resolve, reject) => {
-        x.onload = (e) => {
-            try {
-                resolve(JSON.parse(x.responseText));
-            } catch (e) {
-                resolve([{message: "An unexpected error has occurred"}])
-            }
-        };
-        x.onerror = (err) => {
-            reject({message: x.statusText});
-        };
-    });
-};
 //TODO error when server crashes!
 const YoutubeForm = props => {
     const classes = useStyles();
-    let errors: ErrorDTO[] = [];
+    let errors = [];
 
     return (<Formik
         initialValues={initialValues}
@@ -82,7 +52,7 @@ const YoutubeForm = props => {
 
                 saveAs(blobUrl, fileName);
             } catch (err) {
-                errors = await blobToString(new Blob([err.response.data]));
+                errors = await blobToErrorDto(new Blob([err.response.data]));
             }
             setSubmitting(false);
         }}
