@@ -1,0 +1,46 @@
+{
+  "name": "web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.tsx",
+  "scripts": {
+    "start": "webpack-dev-server --open --config webpack.dev.js",
+    "buildOld": "node node_modules/webpack/bin/webpack.js --config webpack.prod.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "proxy": "http://localhost:3000",
+  "devDependencies": {
+    "@types/react": "^16.9.3",
+    "@types/react-dom": "^16.9.1",
+    "@types/react-redux": "^7.1.4",
+    "awesome-typescript-loader": "^5.2.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^3.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "react-dom": "^16.10.1",
+    "redux-devtools-extension": "^2.13.8",
+    "source-map-loader": "^0.2.4",
+    "style-loader": "^1.0.0",
+    "webpack": "^4.39.2",
+    "webpack-clean-plugin": "^0.2.3",
+    "webpack-cli": "^3.3.7",
+    "webpack-dev-server": "^3.8.0",
+    "webpack-merge": "^4.2.2"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
+    "axios": "^0.19.2",
+    "file-saver": "^2.0.2",
+    "formik": "^2.0.6",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-redux": "^7.1.1",
+    "redux-saga": "^1.1.1",
+    "typescript": "^4.0.2",
+    "@quickconvert/common": "*"
+  }
+}
