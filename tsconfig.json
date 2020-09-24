@@ -21,8 +21,8 @@
     "typeRoots": ["./server/node_modules/@types","./server/src/types","./common/node_modules/types"]
   },
   "include": [
-    "server/src/**/*",
+    "server/**/*",
     "common/**/*"
   ],
-  "exclude": ["node_modules", "web"]
+  "exclude": ["node_modules", "web", "server/node_modules", "common/node_modules"]
 }

@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from "body-parser";
 import cors from 'cors';
 import path from "path";
-import {ErrorDto} from 'common/models/error-dto';
+import {ErrorDto} from '@quickconvert/common';
 
 
 import videosRouter from './routes/videos';

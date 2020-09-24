@@ -1,7 +1,7 @@
 import {audioFormats, videoFormats} from './formats';
 
 const mimeTypes = new Map();
-console.log('s!');
+
 audioFormats.forEach(format => {
     if (format === 'mp3') {
         mimeTypes.set(format, 'audio/mpeg');

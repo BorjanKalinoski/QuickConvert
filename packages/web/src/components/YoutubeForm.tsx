@@ -6,10 +6,7 @@ import axios from 'axios';
 import {saveAs} from 'file-saver';
 import {MyTextField, MyRadioButton} from "./CustomFormComponents";
 import Alert from '@material-ui/lab/Alert';
-// import {validationSchema, formats, blobToErrorDto} from '../utils';
-import {formats} from '@quickconvert/common/constants/formats';
-import {validationSchema} from "@quickconvert/common/validation";
-import blobToErrorDto from '@quickconvert/common/utils/blob-to-string';
+import {formats, validationSchema, blobToString} from '@quickconvert/common';
 
 const useStyles = makeStyles({
     form: {
@@ -27,7 +24,6 @@ const initialValues = {
     format: 'mp3'
 };
 
-//TODO error when server crashes!
 const YoutubeForm = props => {
     const classes = useStyles();
     let errors = [];
@@ -54,7 +50,7 @@ const YoutubeForm = props => {
 
                 saveAs(blobUrl, fileName);
             } catch (err) {
-                errors = await blobToErrorDto(new Blob([err.response.data]));
+                errors = await blobToString(new Blob([err.response.data]));
             }
             setSubmitting(false);
         }}

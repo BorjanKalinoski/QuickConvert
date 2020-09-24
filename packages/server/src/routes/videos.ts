@@ -2,7 +2,7 @@ import {Request, Response, Router} from 'express';
 import ffmpegInstaller from '@ffmpeg-installer/ffmpeg';
 // @ts-ignore
 import ffmpeg from 'fluent-ffmpeg';
-import {VideoData} from '@quickconvert/common/models/video-data';
+import {VideoData} from '@quickconvert/common';
 import {validateVideo, getVideoInfo} from "../middlewares/videos";
 import * as videoController from '../controllers/video-controller';
 
@@ -22,12 +22,9 @@ const downloadVideo = (req: Request, res: Response) => {
     });
     res.attachment(title);
 
-    console.time('download')
     videoController.downloadVideo(videoStream, format, res).catch(err => {
         return res.status(400).json([{message: err.message}]).end(); //Can happen only if the client disrupts the request, maybe just log an error and nothing else
     }).finally(()=>{
-        console.timeEnd('download')
-        console.log('tuka!');
     });
 
 };

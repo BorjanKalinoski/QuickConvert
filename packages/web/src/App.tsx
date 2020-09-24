@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {Grid} from "@material-ui/core";
-
 import YoutubeForm from "./components/YoutubeForm";
 
 const useStyles = makeStyles((theme) => ({
@@ -33,11 +32,3 @@ const App = props => {
 };
 
 export default App;
-
-// navigator.clipboard.readText().then(//optional
-//     clipText => {
-//         console.log('cliptext ');
-//         console.log(clipText);
-//         @ts-ignore
-        // return '';
-    // });

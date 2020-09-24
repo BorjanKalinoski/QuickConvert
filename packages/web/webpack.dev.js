@@ -13,5 +13,8 @@ module.exports = merge(common, {
                 changeOrigin: true
             }
         }
-    }
+    },
+    resolve: {
+        extensions: ['.js', '.json', '.jsx', '.tsx', '.css', '.ts']
+    },
 });
