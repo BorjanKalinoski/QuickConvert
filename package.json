@@ -1,12 +1,11 @@
 {
   "name": "quickconvert",
   "scripts": {
-    "heroku-postbuild": "cd express && npm install && cd ../react && npm install && npm run build",
     "start": "cd express && npm start",
-    "postinstall": "cd express && npm run tsc"
+    "postinstall": "cd express && npm i && npm run tsc && cd ../react && npm i && npm run build"
   },
   "engines": {
-    "node": "12.x",
+    "node": "14.x",
     "npm": "6.x"
   }
 }
