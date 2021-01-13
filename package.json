@@ -1,4 +1,5 @@
 {
+  "name": "quickconvert",
   "scripts": {
     "heroku-postbuild": "cd express && npm install && cd ../react && npm install && npm run build",
     "start": "cd express && npm start",

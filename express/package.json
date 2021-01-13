@@ -1,5 +1,4 @@
 {
-  "name": "quick-convert",
   "version": "1.0.0",
   "description": "Convert and download YouTube videos fast and reliable",
   "main": "app.js",
