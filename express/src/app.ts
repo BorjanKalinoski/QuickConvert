@@ -1,5 +1,24 @@
 import "dotenv/config";
-import createServer from "server";
+import express, { Application } from "express";
+import routes from "./routes";
+import cors from 'cors';
+import path from "path";
+
+export default function createServer() {
+  const app: Application = express();
+  app.use(express.static(path.join(__dirname, '../', '../', 'react/build')));
+  app.use(express.json());
+  app.use(cors({
+    credentials: true,
+    exposedHeaders: [
+      'Content-Disposition',
+      'Content-Length'
+    ]
+  }));
+  app.use(routes);
+
+  return app;
+}
 
 const startServer = () => {
   const app = createServer();

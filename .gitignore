@@ -4,6 +4,7 @@ express/.env
 express/src/**/*.js
 express/src/**/*.map
 coverage
+react/build
 react/.eslintcache
 # User-specific stuff
 .idea/**/workspace.xml
