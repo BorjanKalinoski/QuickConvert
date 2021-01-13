@@ -1,11 +1,12 @@
 {
   "scripts": {
-    "heroku-prebuild": "cd express && npm install && cd ../react && npm install && npm run build",
+    "heroku-postbuild": "cd express && npm install && cd ../react && npm install && npm run build",
     "start": "cd express && npm start",
     "tsc": "cd express && npm run build",
     "postinstall": "npm run tsc"
   },
   "engines": {
-    "node": ">=14"
+    "node": "14.x",
+    "npm": "6.x"
   }
 }
