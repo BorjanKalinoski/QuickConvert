@@ -43,7 +43,7 @@ describe('Test setResponseHeaders middleware', () => {
             'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
             'Content-Type': mockRequest.body.mimeType
         });
-        expect(attachmentSpy).toBeCalledWith(mockRequest.body.title);
+        expect(attachmentSpy).toBeCalledWith(encodeURIComponent(mockRequest.body.title));
         done();
     });
 });
