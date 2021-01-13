@@ -1,6 +1,8 @@
 {
   "scripts": {
-    "heroku-prebuild": "cd express && npm install && npm run build && cd ../react && npm install && npm run build",
-    "start": "cd express && npm start"
+    "heroku-prebuild": "cd express && npm install && cd ../react && npm install && npm run build",
+    "start": "cd express && npm start",
+    "tsc": "cd express && npm run build",
+    "postinstall": "npm run tsc"
   }
 }
