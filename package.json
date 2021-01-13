@@ -2,7 +2,7 @@
   "scripts": {
     "heroku-postbuild": "cd express && npm install && cd ../react && npm install && npm run build",
     "start": "cd express && npm start",
-    "tsc": "cd express && tscp -p .",
+    "tsc": "cd express && tsc -p .",
     "postinstall": "npm run tsc"
   },
   "engines": {
