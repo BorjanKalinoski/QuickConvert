@@ -2,8 +2,8 @@
   "scripts": {
     "heroku-postbuild": "cd express && npm install && cd ../react && npm install && npm run build",
     "start": "cd express && npm start",
-    "tsc": "cd express && tsc -p .",
-    "postinstall": "npm run tsc"
+    "build": "cd express && tsc",
+    "postinstall": "npm run build"
   },
   "engines": {
     "node": "14.x",
