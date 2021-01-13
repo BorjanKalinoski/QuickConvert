@@ -51,5 +51,8 @@
   "devDependencies": {
     "@types/react-router-dom": "^5.1.7",
     "@types/yup": "^0.29.11"
+  },
+  "engines": {
+    "node": ">=14"
   }
 }

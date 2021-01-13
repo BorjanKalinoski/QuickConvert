@@ -4,5 +4,8 @@
     "start": "cd express && npm start",
     "tsc": "cd express && npm run build",
     "postinstall": "npm run tsc"
+  },
+  "engines": {
+    "node": ">=14"
   }
 }
