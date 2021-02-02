@@ -1,7 +1,6 @@
 import React from "react";
 import {AppBar, Button, makeStyles, Toolbar, Typography} from "@material-ui/core";
 import {Link} from "react-router-dom";
-import {useHeaderStyles} from "../../styles";
 
 
 interface Props {
@@ -24,10 +23,10 @@ const headersData = [
 ];
 
 const Header: React.FC<Props> = () => {
-    const classes = useHeaderStyles();
+    // const classes = useHeaderStyles();
 
     const displayDesktop = () => {
-        return <Toolbar className={classes.toolbar}>
+        return <Toolbar>
             {logo}
             <div>
                 {getMenuButtons()}
@@ -35,7 +34,7 @@ const Header: React.FC<Props> = () => {
         </Toolbar>;
     };
     const logo = (
-        <Typography className={classes.logo} variant="h6" component="h1">
+        <Typography variant="h6" component="h1">
             QuickConvert
         </Typography>
     );
@@ -48,7 +47,7 @@ const Header: React.FC<Props> = () => {
                         color: "inherit",
                         to: href,
                         component: Link,
-                        className: classes.menuButton
+
                     }}
                 >
                     {label}
@@ -59,7 +58,7 @@ const Header: React.FC<Props> = () => {
 
 
     return (<header>
-        <AppBar className={classes.header}>{displayDesktop()}</AppBar>
+        <AppBar >{displayDesktop()}</AppBar>
     </header>);
 
 };

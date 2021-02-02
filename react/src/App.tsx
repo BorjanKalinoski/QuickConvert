@@ -1,15 +1,9 @@
 import React from 'react';
-import {
-    BrowserRouter,
-    Switch,
-    Route,
-    Link
-} from "react-router-dom";
+import {BrowserRouter, Switch, Route} from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import ContactPage from "./pages/ContactPage";
 import AboutPage from "./pages/AboutPage";
-import Header from "./components/common/Header";
-import {Container} from "@material-ui/core";
+import './styles/main.scss';
 
 function App() {
     return (

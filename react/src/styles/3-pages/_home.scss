@@ -1,0 +1,27 @@
+.home-container {
+  margin: 0;
+  background-color: $colorPrimary;
+  text-align: center;
+  width: 100%;
+  padding: 55px 0;
+  font-family: $fontPrimary;
+}
+
+.title {
+  width: 80%;
+  color: $textColorPrimary;
+  font-size: 9vw;
+  font-family: $fontPrimary;
+  font-weight: 700;
+  margin: 0 auto 30px;
+}
+
+.subtitle {
+  width: 50%;
+  margin: 0 auto;
+  color: $textColorPrimary;
+  font-size: 4.5vw;
+  font-family: $fontPrimary;
+  font-weight: 500;
+  line-height: 1.55em;
+}

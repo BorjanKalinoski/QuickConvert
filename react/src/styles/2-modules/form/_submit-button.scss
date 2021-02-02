@@ -1,0 +1,13 @@
+.btn-container {
+  width: 100%;
+  border-radius: $borderRadius;
+  height: $inputHeight;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+  margin: 40px 0 auto;
+  background-color: $colorSecondary;
+  font-family: $fontPrimary;
+  color: $textColorPrimary;
+}

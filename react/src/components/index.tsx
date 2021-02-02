@@ -1,11 +1,10 @@
 import CircularProgressWithLabel from "./common/CircularProgressWithLabel";
 import QCForm from "./form/QCForm";
-import QCTextField from "./form/QCTextField";
 import QCRadioButton from "./form/QCRadioButton";
-
+import QCTextField from "./form/QCTextField";
 export {
     CircularProgressWithLabel,
     QCForm,
-    QCTextField,
-    QCRadioButton
+    QCRadioButton,
+    QCTextField
 };
