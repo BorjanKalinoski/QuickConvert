@@ -1,5 +1,5 @@
-import {Field, useField} from "formik";
 import React from "react";
+import {Field, useField} from "formik";
 import QCLabel from "./QCLabel";
 
 const QCTextField: React.FC<any> = (props: any) => {
@@ -19,8 +19,8 @@ const QCTextField: React.FC<any> = (props: any) => {
               field, // { name, value, onChange, onBlur }
               form: {touched, errors}, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
               meta,
-          }) => {
-            return <div className='input-container'>
+          }) => (
+            <>
                 <input
                     required
                     autoComplete='off'
@@ -29,8 +29,9 @@ const QCTextField: React.FC<any> = (props: any) => {
                     {...field}
                 />
                 <QCLabel name={field.name} content={'YouTube URL'}/>
-            </div>;
-        }}
+            </>)
+        }
+
 
     </Field>;
 

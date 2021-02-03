@@ -15,8 +15,8 @@
   position: relative;
 }
 
-input {
-  width: calc(100% - 10px);
+input[type='text'] {
+  width: 100%;
   height: 100%;
   color: black;
   padding: 0 5px;
@@ -52,7 +52,7 @@ input {
     left: 0;
     bottom:0;
     position: absolute;
-    width: calc(100% + 5px);
+    width: calc(100% - #{$inputHeight} + 5px);
     border-radius: 0 0 5px 5px;
     height: 2px;
     border-bottom: 3px solid #A70D0D;

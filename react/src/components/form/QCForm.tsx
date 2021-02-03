@@ -5,6 +5,7 @@ import {useFakeDownloadProgress} from "../../hooks";
 import {downloadVideo} from "../../api";
 import {downloadFile} from "../../utils";
 import QCTextField  from "./QCTextField";
+import QCDropdownMenu from "./QCDropdownMenu";
 interface Props {
     setUrl: any;
 }
@@ -40,96 +41,22 @@ const QCForm: React.FC<Props> = ({setUrl}) => {
             }
         }}
     >
-        {({values}) => {
-            console.log(values)
-
-            // setUrl(url);
+        {({values, setFieldValue}) => {
+            console.log(values);
 
             return <Form className='form-container'>
 
                 <div className='input-container'>
                     <QCTextField name='url'/>
-                    {/*<QCSelect*/}
-                    {/*    name='format'*/}
-                    {/*    data..*/}
-                    {/*/>*/}
-                    <div id='format-container'>
-                        <span>
-                            mp3
-                        </span>
-                    </div>
+                    <QCDropdownMenu
+                        format={values.format}
+                        handleFormatChange={setFieldValue}
+                    />
                 </div>
 
                 <div className={'btn-container'}>
                     Download
                 </div>
-
-                {/*<Grid*/}
-                {/*    xs={12}*/}
-                {/*    item*/}
-                {/*    container*/}
-                {/*    justify='center'*/}
-                {/*    alignContent='center'*/}
-                {/*    className={classes.inputRow}*/}
-                {/*>*/}
-
-                {/*    <Grid item xs={10}>*/}
-                {/*        /!*<CssTextField*!/*/}
-                {/*        /!*    label="Custom CSS"*!/*/}
-                {/*        /!*    variant="outlined"*!/*/}
-                {/*        /!*    id="custom-css-outlined-input"*!/*/}
-                {/*        /!*//*/}
-                {/*        <QCTextField*/}
-                {/*            as={TextField}*/}
-                {/*            name="url"*/}
-                {/*            label="YouTube URL"*/}
-                {/*            placeholder="https://www.youtube.com/watch?v=f02mOEt11OQ"*/}
-                {/*            className={classes.textField}*/}
-                {/*            variant="outlined"*/}
-                {/*            autoComplete={'off'}*/}
-                {/*        />*/}
-                {/*    </Grid>*/}
-                {/*    <Grid*/}
-                {/*        xs={2}*/}
-                {/*        item*/}
-                {/*        container*/}
-                {/*        justify='center'*/}
-                {/*        alignContent='center'*/}
-                {/*        className={classes.downloadButtonContainer}*/}
-                {/*    >*/}
-                {/*        {*/}
-                {/*            isSubmitting*/}
-                {/*                ? <CircularProgressWithLabel value={progress}/>*/}
-                {/*                : <Button*/}
-                {/*                    id={"test"}*/}
-                {/*                    className={classes.downloadButton}*/}
-                {/*                    disabled={isSubmitting}*/}
-                {/*                    type='submit'*/}
-                {/*                    children={<GetAppRoundedIcon/>}*/}
-                {/*                />*/}
-                {/*        }*/}
-                {/*    </Grid>*/}
-                {/*</Grid>*/}
-                {/*<div className={classes.downloadContainer}>*/}
-                {/*    Download*/}
-                {/*</div>*/}
-                {/*<FormControl className={classes.margin}>*/}
-                {/*    <InputLabel shrink htmlFor="bootstrap-input">*/}
-                {/*        YouTube URL*/}
-                {/*    </InputLabel>*/}
-                {/*    <BootstrapInput defaultValue="react-bootstrap" id="bootstrap-input" />*/}
-                {/*</FormControl>*/}
-                {/*<Grid item container justify="center" xs={12}>*/}
-                {/*    {formats.map(format =>*/}
-                {/*        <QCRadioButton*/}
-                {/*            key={format}*/}
-                {/*            type="radio"*/}
-                {/*            name="format"*/}
-                {/*            value={format}*/}
-                {/*            label={format}*/}
-                {/*        />*/}
-                {/*    )}*/}
-                {/*</Grid>*/}
             </Form>;
         }}
     </Formik>);
