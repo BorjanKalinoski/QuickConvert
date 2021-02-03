@@ -1,6 +1,7 @@
-import React, {useRef, useState} from "react";
+import React from "react";
 import {formats} from "../../constants";
 import Dropdown from 'react-dropdown';
+
 interface Props {
     format: string;
     handleFormatChange: Function;

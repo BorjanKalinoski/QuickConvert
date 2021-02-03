@@ -6,8 +6,27 @@
   justify-content: center;
   align-items: center;
   vertical-align: middle;
-  margin: 40px 0 auto;
+  margin: 30px 0 auto;
   background-color: $colorSecondary;
   font-family: $fontPrimary;
   color: $textColorPrimary;
+  outline: none;
+  border: none;
+  position: relative;
+  transform: translateY(0%);
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #ffefef;
+    color: black;
+    cursor: pointer;
+    box-shadow: $boxShadow;
+    transform: translateY(-2.5%);
+    transition: all 0.2s ease;
+  }
+  //On Click
+  &:active {
+    transform: translateY(2.5%);
+    transition: all 0.2s ease;
+  }
 }
