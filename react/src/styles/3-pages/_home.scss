@@ -5,6 +5,17 @@
   width: 100%;
   padding: 55px 0;
   font-family: $fontPrimary;
+
+  @include media(">=phone") {
+    width: 90%;
+    margin: 25px auto;
+    border-radius: $borderRadius;
+  }
+
+  @include media(">tablet") {
+    margin: 20px auto;
+    width:65%;
+  }
 }
 
 .title {
@@ -14,6 +25,15 @@
   font-family: $fontPrimary;
   font-weight: 700;
   margin: 0 auto 30px;
+
+  @include media(">=phone", "<=tablet") {
+    font-size: 48px;
+  }
+
+  @include media(">tablet") {
+    font-size: 3.4vw;
+    margin: 0 auto 20px;
+  }
 }
 
 .subtitle {
@@ -24,4 +44,15 @@
   font-family: $fontPrimary;
   font-weight: 500;
   line-height: 1.55em;
+
+  @include media(">=phone", "<=tablet") {
+    font-size: 22px;
+    width: 40%;
+  }
+
+  @include media(">tablet") {
+    font-size: 1.33vw;
+    width: 25%;
+
+  }
 }

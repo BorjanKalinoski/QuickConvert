@@ -1,10 +1,12 @@
+@import './node_modules/include-media/dist/include-media';
+
 //Basics
 @import "0-basics/base";
 @import "0-basics/typography";
 
 //Helpers
 @import "1-helpers/variables";
-
+@import "1-helpers/functions";
 
 //Modules
 @import "2-modules/form/form";

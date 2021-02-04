@@ -1,7 +1,7 @@
 .btn-container {
   width: 100%;
   border-radius: $borderRadius;
-  height: $inputHeight;
+  height: input-field-size();
   display: flex;
   justify-content: center;
   align-items: center;
@@ -28,5 +28,12 @@
   &:active {
     transform: translateY(2.5%);
     transition: all 0.2s ease;
+  }
+
+  @include media('>=phone','<=tablet'){
+    height: input-field-size(tablet);
+  }
+  @include media('>tablet'){
+    height: input-field-size(desktop);
   }
 }

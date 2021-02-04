@@ -4,15 +4,46 @@
   display: flex;
   padding: 0 10px;
   flex-direction: column;
+  * {
+    font-size: 14px;
+  }
+
+  @include media(">=phone", "<=768px") {
+    width: 60%;
+
+  }
+  @include media(">768px", "<=tablet") {
+    width: 45%;
+    * {
+      font-size: 16px;
+    }
+  }
+
+  @include media(">tablet") {
+    width: 45%;
+    * {
+      font-size: 16.5px;
+
+    }
+  }
 }
 
 .input-container {
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: $inputHeight;
-  max-height: $inputHeight;
+  height: input-field-size();
+  max-height: input-field-size();
   position: relative;
+  @include media(">=phone", "<=tablet") {
+    height: input-field-size(tablet);
+    max-height: input-field-size(tablet);
+  }
+
+  @include media(">tablet") {
+    height: input-field-size(desktop);
+    max-height: input-field-size(desktop);
+  }
 }
 
 input[type='text'] {
@@ -24,7 +55,6 @@ input[type='text'] {
   text-align: left;
   outline: none;
   border-radius: 5px 0 0 5px;
-  font-size: 14px;
 
   &:valid + .label-container .label-content,
   &:focus + .label-container .label-content, {
@@ -32,6 +62,13 @@ input[type='text'] {
     color: white;
     font-size: 14px;
     left: 0;
+
+    @include media('>=phone', '<tablet') {
+      transform: translateY(-190%);
+    }
+    @include media('>tablet') {
+      transform: translateY(-200%);
+    }
   }
   &:focus + .label-container:after,
   &:valid + .label-container:after,{
@@ -52,7 +89,7 @@ input[type='text'] {
     left: 0;
     bottom:0;
     position: absolute;
-    width: calc(100% - #{$inputHeight} + 5px);
+    width: calc(100% - #{input-field-size()} + 5px);
     border-radius: 0 0 5px 5px;
     height: 2px;
     border-bottom: 3px solid #A70D0D;
@@ -62,12 +99,16 @@ input[type='text'] {
   }
 }
 
-.label-content{
+.label-content {
   position: absolute;
   bottom: 15px;
   left: 5px;
-  font-size: 14px;
   transition: all 0.3s ease;
+  @include media('>tablet'){
+    left: 14px;
+    bottom: 17px;
+
+  }
 }
 
 #format-container {
@@ -84,4 +125,3 @@ input[type='text'] {
   z-index: 1;
   cursor: pointer;
 }
-

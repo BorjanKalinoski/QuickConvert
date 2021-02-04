@@ -1,0 +1,17 @@
+@function input-field-size($screen: phone) {
+  $calcSize: null;
+
+  @if ($screen == phone) {
+    $calcSize: 50px;
+  }
+  @if ($screen == tablet){
+    $calcSize: 55px;
+  }
+
+  @if ($screen == desktop) {
+
+    $calcSize: 58px;
+  }
+
+  @return $calcSize;
+}

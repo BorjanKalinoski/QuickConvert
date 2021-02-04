@@ -1,6 +1,16 @@
+$breakpoints: (
+        'phone': 425px,
+        'tablet': 1024px,
+        'desktop': 1920px
+);
+
 //Color variables
-$colorPrimary: #D63A3A;
-$colorSecondary: #A70D0D;
+//#f45353
+$colorPrimary:#e74747;
+        //#D63A3A;
+        //#D63A3A;
+$colorSecondary: #890f0f;
+        //#A70D0D;
 $textColorPrimary: #fff;
 $textColorSecondary: #000;
 
@@ -11,7 +21,8 @@ $fontSecondary: DM Sans, sans-serif !important;
 
 //Other constants
 $borderRadius: 4px;
-$inputHeight: 50px;
+$num-of-formats: 4;
+
 
 $boxShadow: 0 2.2px 2.0px rgba(0, 0, 0, 0.034),
 0 5.7px 4.3px rgba(0, 0, 0, 0.048),

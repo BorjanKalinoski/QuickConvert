@@ -1,30 +1,46 @@
 .dropdown-container {
   position: relative;
-  height: $inputHeight;
-  width: $inputHeight;
-  min-width: $inputHeight;
-  min-height: $inputHeight;
-  max-height: $inputHeight;
+  height: input-field-size();
+  width: input-field-size();
+  min-width: input-field-size();
+  min-height: input-field-size();
+  max-height: input-field-size();
   background-color: $colorSecondary;
   display: flex;
   justify-content: space-around;
   align-items: center;
   margin: auto;
-  font-size: 14px;
   border-radius: 0 $borderRadius $borderRadius 0;
   font-family: $fontPrimary;
   color: #fff;
   cursor: pointer !important;
+
   &:hover {
     background-color: #FF4F4F;
     color: white;
     transition: all 0.2s ease;
   }
 
+  @include media('>=phone', '<=tablet') {
+    height: input-field-size(tablet);
+    width: input-field-size(tablet);
+    min-width: input-field-size(tablet);
+    min-height: input-field-size(tablet);
+    max-height: input-field-size(tablet);
+  }
+
+  @include media('>tablet') {
+    height: input-field-size(desktop);
+    width: input-field-size(desktop);
+    min-width: input-field-size(desktop);
+    min-height: input-field-size(desktop);
+    max-height: input-field-size(desktop);
+  }
+
 }
-.is-selected, .is-open{
-  border-radius: 0 $borderRadius 0 0;
-  transition: all 0.2s ease;
+.is-open {
+   border-radius: 0 $borderRadius 0 0;
+   transition: all 0.2s ease;
 }
 
 .Dropdown-menu {
@@ -33,7 +49,7 @@
   padding: 0;
   position: absolute;
   background-color: white;
-  bottom: -200px;
+  bottom: calc(-#{$num-of-formats} * #{input-field-size()});
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -42,19 +58,36 @@
   box-shadow: $boxShadow;
   color: black;
   transition: all 0.2s ease !important;
+  @include media('>=phone', '<=tablet') {
+    bottom: calc(-#{$num-of-formats} * #{input-field-size(tablet)});
+  }
+
+  @include media('>tablet') {
+    bottom: calc(-#{$num-of-formats} * #{input-field-size(desktop)});
+  }
 }
 
 .dropdown-menu div {
-  width: 50px;
-  height: 50px;
+  width: input-field-size();
+  height: input-field-size();
   display: flex;
   justify-content: center;
   align-items: center;
   border: 0.5px solid rgba(162, 159, 159, 0.3);
   transition: all 0.2s ease !important;
-  &:hover{
+
+  &:hover {
     background-color: #FF4F4F;
     color: white;
     transition: all 0.2s ease;
+  }
+
+  @include media('>=phone', '<=tablet') {
+    width: input-field-size(tablet);
+    height: input-field-size(tablet);
+  }
+  @include media('>tablet') {
+    width: input-field-size(desktop);
+    height: input-field-size(desktop);
   }
 }

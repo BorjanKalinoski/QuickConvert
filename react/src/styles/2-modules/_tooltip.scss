@@ -1,15 +1,27 @@
-.tooltip {
+.form-container .tooltip {
   margin-top: 10px;
-  width: 160px;
+  width: 170px;
   color: $colorSecondary;
   padding: 4px 5px;
   background-color: white;
   border-radius: $borderRadius;
   position: relative;
-  font-size: 11px;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   z-index: 2;
+
+  .tooltip-text {
+    font-size: 12px !important;
+    margin-right: 5px;
+  }
+
+  @include media('>tablet'){
+    width: 200px;
+    .tooltip-text {
+      font-size: 14px !important;
+      margin-right: 10px;
+    }
+  }
 }
 
 .tooltip-filler {
@@ -19,7 +31,7 @@
   margin-right: 5px;
 
   //Triangle for tooltip
-  &:after{
+  &:after {
     z-index: 1;
     content: '';
     position: absolute;
